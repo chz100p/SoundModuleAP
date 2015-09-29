@@ -37,6 +37,7 @@ See also BatchCommandDialog and BatchProcessDialog.
 #include "export/ExportMP3.h"
 #include "export/ExportOGG.h"
 #include "export/ExportPCM.h"
+#include "export/ExportSoundModule.h"
 
 #include "Theme.h"
 #include "AllThemeResources.h"
@@ -61,7 +62,8 @@ static wxString SpecialCommands[] = {
    wxT("ExportFLAC"),
    wxT("ExportMP3"),
    wxT("ExportOgg"),
-   wxT("ExportWAV")
+   wxT("ExportWAV"),
+   wxT("ExportSoundModule")
 };
 // end CLEANSPEECH remnant
 
@@ -150,6 +152,8 @@ bool BatchCommands::ReadChain(const wxString & chain)
             cmd = wxT("ExportMP3");
          else if (cmd == wxT("ExportWav"))
             cmd = wxT("ExportWAV");
+         else if (cmd == wxT("ExportSoundModule"))
+            cmd = wxT("ExportSoundModule");
          else if (cmd == wxT("Compressor") && (parm.find(wxT("DecayTime")) != parm.npos))
             parm.Replace(wxT("DecayTime"), wxT("ReleaseTime"), NULL);   // 2.0.6
 
@@ -204,6 +208,8 @@ bool BatchCommands::WriteChain(const wxString & chain)
          mCommandChain[i] = wxT("ExportMp3");
       else if (mCommandChain[i] == wxT("ExportWAV"))
          mCommandChain[i] = wxT("ExportWav");
+      else if (mCommandChain[i] == wxT("ExportSoundModule"))
+         mCommandChain[i] = wxT("ExportSoundModule");
 
       tf.AddLine(mCommandChain[i] + wxT(":") + mParamsChain[ i ]);
    }
@@ -480,6 +486,12 @@ bool BatchCommands::ApplySpecialCommand(int WXUNUSED(iCommand), const wxString c
       return false;
    } else if (command == wxT("ExportMP3")) {
       return WriteMp3File(filename, 0); // 0 bitrate means use default/current
+   } else if (command == wxT("ExportSoundModule")) {
+      double endTime = GetEndTime();
+      //if (endTime <= 0.0f) {
+      //   return false;
+      //}
+      return mExporter.Process(project, numChannels, wxT("SoundModule"), filename, false, 0.0, endTime);
    } else if (command == wxT("ExportWAV")) {
       filename.Replace(wxT(".mp3"), wxT(".wav"), false);
       double endTime = GetEndTime();

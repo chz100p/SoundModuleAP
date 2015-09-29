@@ -174,7 +174,7 @@ WX_DEFINE_USER_EXPORTED_OBJARRAY( ArrayOfColours )
 #include "../images/GlyphImages.h"
 #include "../images/UploadImages.h"
 
-#include "../images/AudacityLogoWithName.xpm"
+#include "../images/SoundModuleLogoWithName.xpm"
 //#include "../images/AudacityLogo.xpm"
 #include "../images/AudacityLogo48x48.xpm"
 #endif

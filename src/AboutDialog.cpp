@@ -47,6 +47,7 @@ WX_DEFINE_LIST(AboutDialogCreditItemsList);
 #include "Theme.h"
 #include "AllThemeResources.h"
 
+#include "../images/SoundModuleLogoWithName.xpm"
 #include "../images/AudacityLogoWithName.xpm"
 
 void AboutDialog::CreateCreditsList()
@@ -180,7 +181,7 @@ END_EVENT_TABLE()
 IMPLEMENT_CLASS(AboutDialog, wxDialog)
 
 AboutDialog::AboutDialog(wxWindow * parent)
-   :  wxDialog(parent, -1, _("About Audacity"),
+   :  wxDialog(parent, -1, _("About SoundModule"),
                wxDefaultPosition, wxDefaultSize,
                wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
 {
@@ -189,7 +190,8 @@ AboutDialog::AboutDialog(wxWindow * parent)
    ShuttleGui S( this, eIsCreating );
    S.StartNotebook();
    {
-      PopulateAudacityPage( S );
+	  PopulateSoundModulePage( S );
+      // PopulateAudacityPage( S );
       PopulateInformationPage( S );
       PopulateLicensePage( S );
    }
@@ -199,7 +201,7 @@ AboutDialog::AboutDialog(wxWindow * parent)
     * In English it is slightly humorous alternative to an 'OK' button.
     * If the humour doesn't work in your language, then just use whatever
     * you would use for a translation for 'OK' on a button. */
-   wxButton *ok = new wxButton(S.GetParent(), wxID_OK, _("OK... Audacious!"));
+   wxButton *ok = new wxButton(S.GetParent(), wxID_OK, _("OK..."));
    ok->SetDefault();
    S.Prop(0).AddWindow( ok );
 
@@ -209,29 +211,8 @@ AboutDialog::AboutDialog(wxWindow * parent)
 
 #define ABOUT_DIALOG_WIDTH 506
 
-void AboutDialog::PopulateAudacityPage( ShuttleGui & S )
+void AboutDialog::PopulateSoundModulePage( ShuttleGui & S )
 {
-   creditItems.DeleteContents(true); // Switch on automatic deletion of list items.
-   CreateCreditsList();
-
-   wxString par1Str = _(
-"Audacity is a free program written by a worldwide team of volunteer <a href=\"http://audacity.sourceforge.net/community/developers\">developers</a>. \
-We thank <a href=\"http://code.google.com\">Google Code</a> and <a href=\"http://sourceforge.net\">SourceForge</a> for hosting our project. \
-Audacity is <a href=\"http://audacity.sourceforge.net/download/\">available</a> for Windows, Mac, and GNU/Linux (and other Unix-like systems).");
-
-   // This trick here means that the English language version won't mention using
-   // English, whereas all translated versions will.
-   wxString par2StrUntranslated = wxT(
-"If you find a bug or have a suggestion for us, please write, in English, to our <a href=\"mailto:feedback@audacityteam.org\">feedback address</a>. \
-For help, view the tips and tricks on our <a href=\"http://wiki.audacityteam.org/\">wiki</a> or \
-visit our <a href=\"http://forum.audacityteam.org/\">forum</a>.");
-   wxString par2Str = _(
-"If you find a bug or have a suggestion for us, please write, in English, to our <a href=\"mailto:feedback@audacityteam.org\">feedback address</a>. \
-For help, view the tips and tricks on our <a href=\"http://wiki.audacityteam.org/\">wiki</a> or \
-visit our <a href=\"http://forum.audacityteam.org/\">forum</a>.");
-
-   if( par2Str == par2StrUntranslated )
-      par2Str.Replace( wxT(", in English,"), wxT("") );
 
    wxString translatorCredits;
    /* i18n-hint: The translation of "translator_credits" will appear
@@ -250,50 +231,19 @@ visit our <a href=\"http://forum.audacityteam.org/\">forum</a>.");
          localeStr +
          wxT("\"></head>") +
       wxT("<body bgcolor=\"#ffffff\"><center>") +
-      wxT("<h3>Audacity ") + wxString(AUDACITY_VERSION_STRING) + wxT("</h3>")+
-      _("free, open source, cross-platform software for recording and editing sounds<br>") +
-      wxT("<a href=\"http://audacity.sourceforge.net/\">http://audacity.sourceforge.net/</a>") +
-      wxT("<p><br>") + par1Str +
-      wxT("<p>") + par2Str +
-      wxT("<h3>") + _("Credits") + wxT("</h3>") +
-      wxT("<p>") + translatorCredits +
-
-      wxT("<p><b>") + wxString::Format(_("Audacity Developers")) + wxT("</b><br>") +
-      GetCreditsByRole(roleTeamDeveloper) +
-
-      wxT("<p><b>") + wxString::Format(_("Audacity Support Team")) + wxT("</b><br>") +
-      GetCreditsByRole(roleTeamSupport) +
-
-      wxT("<p><b>") + _("Emeritus Developers") + wxT("</b><br>") +
-      GetCreditsByRole(roleEmeritusDeveloper) +
-
-      wxT("<p><b>") + _(" Emeritus Team Members") + wxT("</b><br>") +
-      GetCreditsByRole(roleEmeritusSupport) +
-
-      wxT("<p><b>") + _("Other Contributors") + wxT("</b><br>") +
-      GetCreditsByRole(roleContributor) +
-
-      wxT("<p><b>") +  _("Audacity is based on code from the following projects:") + wxT("</b><br>") +
-      GetCreditsByRole(roleLibrary) +
-
-      wxT("<p><b>") +  _("Special thanks:") + wxT("</b><br>") +
-      GetCreditsByRole(roleThanks) +
-
-      wxT("<p><br>") + _("<b>Audacity&reg;</b> software is copyright")+
-      wxT("&copy; 1999-2015 Audacity Team.<br>") +
-      _("The name <b>Audacity&reg;</b> is a registered trademark of Dominic Mazzoni.") +
-      wxT("</center></font></body></html>");
+      wxT("<h3>SoundModule ") + wxString(AUDACITY_VERSION_STRING) + wxT("</h3>")+
+	  wxT("</center></body></html>");
 
 
    this->SetBackgroundColour(theTheme.Colour( clrAboutBoxBackground ));
 
 
    // New way to add to About box....
-   S.StartNotebookPage( wxT("Audacity") );
+   S.StartNotebookPage( wxT("SoundModule") );
    S.StartVerticalLay(1);
 
-   //v For now, change to AudacityLogoWithName via old-fashioned way, not Theme.
-   logo = new wxBitmap((const char **) AudacityLogoWithName_xpm); //v
+   //v For now, change to SoundModuleLogoWithName via old-fashioned way, not Theme.
+   logo = new wxBitmap((const char **) SoundModuleLogoWithName_xpm); //v
 
    // JKC: Resize to 50% of size.  Later we may use a smaller xpm as
    // our source, but this allows us to tweak the size - if we want to.
@@ -307,8 +257,8 @@ visit our <a href=\"http://forum.audacityteam.org/\">forum</a>.");
    icon =
        new wxStaticBitmap(S.GetParent(), -1,
                           //*logo, //v
-                          //v theTheme.Bitmap(bmpAudacityLogo), wxPoint(93, 10), wxSize(215, 190));
-                          //v theTheme.Bitmap(bmpAudacityLogoWithName),
+                          //v theTheme.Bitmap(bmpSoundModuleLogo), wxPoint(93, 10), wxSize(215, 190));
+                          //v theTheme.Bitmap(bmpSoundModuleLogoWithName),
                           RescaledBitmap,
                           wxDefaultPosition,
                           wxSize(int(LOGOWITHNAME_WIDTH*fScale), int(LOGOWITHNAME_HEIGHT*fScale)));
@@ -327,6 +277,126 @@ visit our <a href=\"http://forum.audacityteam.org/\">forum</a>.");
 
    S.EndVerticalLay();
    S.EndNotebookPage();
+}
+
+void AboutDialog::PopulateAudacityPage(ShuttleGui & S)
+{
+	creditItems.DeleteContents(true); // Switch on automatic deletion of list items.
+	CreateCreditsList();
+
+	wxString par1Str = _(
+		"Audacity is a free program written by a worldwide team of volunteer <a href=\"http://audacity.sourceforge.net/community/developers\">developers</a>. \
+		We thank <a href=\"http://code.google.com\">Google Code</a> and <a href=\"http://sourceforge.net\">SourceForge</a> for hosting our project. \
+		Audacity is <a href=\"http://audacity.sourceforge.net/download/\">available</a> for Windows, Mac, and GNU/Linux (and other Unix-like systems).");
+
+	// This trick here means that the English language version won't mention using
+	// English, whereas all translated versions will.
+	wxString par2StrUntranslated = wxT(
+		"If you find a bug or have a suggestion for us, please write, in English, to our <a href=\"mailto:feedback@audacityteam.org\">feedback address</a>. \
+		For help, view the tips and tricks on our <a href=\"http://wiki.audacityteam.org/\">wiki</a> or \
+		visit our <a href=\"http://forum.audacityteam.org/\">forum</a>.");
+	wxString par2Str = _(
+		"If you find a bug or have a suggestion for us, please write, in English, to our <a href=\"mailto:feedback@audacityteam.org\">feedback address</a>. \
+		For help, view the tips and tricks on our <a href=\"http://wiki.audacityteam.org/\">wiki</a> or \
+		visit our <a href=\"http://forum.audacityteam.org/\">forum</a>.");
+
+	if (par2Str == par2StrUntranslated)
+		par2Str.Replace(wxT(", in English,"), wxT(""));
+
+	wxString translatorCredits;
+	/* i18n-hint: The translation of "translator_credits" will appear
+	*  in the credits in the About Audacity window.  Use this to add
+	*  your own name(s) to the credits.
+	*
+	*  For example:  "English translation by Dominic Mazzoni." */
+	if (_("translator_credits") != wxString(wxT("translator_credits")))
+	{
+		translatorCredits = _("translator_credits");
+	}
+	wxString localeStr = wxLocale::GetSystemEncodingName();
+
+	wxString creditStr =
+		wxT("<html><head><META http-equiv=\"Content-Type\" content=\"text/html; charset=") +
+		localeStr +
+		wxT("\"></head>") +
+		wxT("<body bgcolor=\"#ffffff\"><center>") +
+		wxT("<h3>Audacity ") + wxString(AUDACITY_VERSION_STRING) + wxT("</h3>") +
+		_("free, open source, cross-platform software for recording and editing sounds<br>") +
+		wxT("<a href=\"http://audacity.sourceforge.net/\">http://audacity.sourceforge.net/</a>") +
+		wxT("<p><br>") + par1Str +
+		wxT("<p>") + par2Str +
+		wxT("<h3>") + _("Credits") + wxT("</h3>") +
+		wxT("<p>") + translatorCredits +
+
+		wxT("<p><b>") + wxString::Format(_("Audacity Developers")) + wxT("</b><br>") +
+		GetCreditsByRole(roleTeamDeveloper) +
+
+		wxT("<p><b>") + wxString::Format(_("Audacity Support Team")) + wxT("</b><br>") +
+		GetCreditsByRole(roleTeamSupport) +
+
+		wxT("<p><b>") + _("Emeritus Developers") + wxT("</b><br>") +
+		GetCreditsByRole(roleEmeritusDeveloper) +
+
+		wxT("<p><b>") + _(" Emeritus Team Members") + wxT("</b><br>") +
+		GetCreditsByRole(roleEmeritusSupport) +
+
+		wxT("<p><b>") + _("Other Contributors") + wxT("</b><br>") +
+		GetCreditsByRole(roleContributor) +
+
+		wxT("<p><b>") + _("Audacity is based on code from the following projects:") + wxT("</b><br>") +
+		GetCreditsByRole(roleLibrary) +
+
+		wxT("<p><b>") + _("Special thanks:") + wxT("</b><br>") +
+		GetCreditsByRole(roleThanks) +
+
+		wxT("<p><br>") + _("<b>Audacity&reg;</b> software is copyright") +
+		wxT("&copy; 1999-2015 Audacity Team.<br>") +
+		_("The name <b>Audacity&reg;</b> is a registered trademark of Dominic Mazzoni.") +
+		wxT("</center></body></html>");
+
+
+	this->SetBackgroundColour(theTheme.Colour(clrAboutBoxBackground));
+
+
+	// New way to add to About box....
+	S.StartNotebookPage(wxT("Audacity"));
+	S.StartVerticalLay(1);
+
+	//v For now, change to AudacityLogoWithName via old-fashioned way, not Theme.
+	logo = new wxBitmap((const char **)AudacityLogoWithName_xpm); //v
+
+	// JKC: Resize to 50% of size.  Later we may use a smaller xpm as
+	// our source, but this allows us to tweak the size - if we want to.
+	// It also makes it easier to revert to full size if we decide to.
+	const float fScale = 0.5f;// smaller size.
+	wxImage RescaledImage(logo->ConvertToImage());
+	// wxIMAGE_QUALITY_HIGH not supported by wxWidgets 2.6.1, or we would use it here.
+	RescaledImage.Rescale(int(LOGOWITHNAME_WIDTH * fScale), int(LOGOWITHNAME_HEIGHT *fScale));
+	wxBitmap RescaledBitmap(RescaledImage);
+
+	icon =
+		new wxStaticBitmap(S.GetParent(), -1,
+		//*logo, //v
+		//v theTheme.Bitmap(bmpAudacityLogo), wxPoint(93, 10), wxSize(215, 190));
+		//v theTheme.Bitmap(bmpAudacityLogoWithName),
+		RescaledBitmap,
+		wxDefaultPosition,
+		wxSize(int(LOGOWITHNAME_WIDTH*fScale), int(LOGOWITHNAME_HEIGHT*fScale)));
+	delete logo;
+	S.Prop(0).AddWindow(icon);
+
+	HtmlWindow *html = new LinkingHtmlWindow(S.GetParent(), -1,
+		wxDefaultPosition,
+		wxSize(ABOUT_DIALOG_WIDTH, 359),
+		wxHW_SCROLLBAR_AUTO | wxSUNKEN_BORDER);
+	html->SetFocus();
+	html->SetPage(creditStr);
+
+	/* locate the html renderer where it fits in the dialogue */
+	S.Prop(1).AddWindow(html, wxEXPAND);
+
+	S.EndVerticalLay();
+	S.EndNotebookPage();
 }
 
 /** \brief: Fills out the "Information" tab of the preferences dialogue
@@ -352,6 +422,12 @@ void AboutDialog::PopulateInformationPage( ShuttleGui & S )
    informationStr = wxT("<h2><center>");
    informationStr += _("Build Information");
    informationStr += wxT("</center></h2>\n");
+   //
+   informationStr += wxT("<h3>");
+   informationStr += _("Audacity Version");
+   informationStr += wxT("</h3>\n<p>");
+   informationStr += wxT("Audacity v") + wxString(AUDACITY_VERSION_STRING) + wxT("\n<p>");
+
    // top level heading
    informationStr += wxT("<h3>");
    informationStr += _("File Format Support");

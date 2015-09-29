@@ -93,6 +93,7 @@ simplifies construction of menu items.
 #include "prefs/BatchPrefs.h"
 
 #include "toolbars/ToolManager.h"
+#include "toolbars/SoundModuleToolBar.h"
 #include "toolbars/ControlToolBar.h"
 #include "toolbars/ToolsToolBar.h"
 #include "toolbars/EditToolBar.h"
@@ -775,6 +776,8 @@ void AudacityProject::CreateMenusAndCommands()
    c->AddCheck(wxT("ShowTranscriptionTB"), _("Transcri&ption Toolbar"), FN(OnShowTranscriptionToolBar), 0, AlwaysEnabledFlag, AlwaysEnabledFlag);
    /* i18n-hint: Clicking this menu item shows the toolbar with the big buttons on it (play record etc)*/
    c->AddCheck(wxT("ShowTransportTB"), _("&Transport Toolbar"), FN(OnShowTransportToolBar), 0, AlwaysEnabledFlag, AlwaysEnabledFlag);
+   /* i18n-hint: Clicking this menu item shows the toolbar with the big buttons on it (play record etc)*/
+   c->AddCheck(wxT("ShowSoundModuleTB"), _("&SoundModule Toolbar"), FN(OnShowSoundModuleToolBar), 0, AlwaysEnabledFlag, AlwaysEnabledFlag);
 
    c->AddSeparator();
 
@@ -1179,7 +1182,7 @@ void AudacityProject::CreateMenusAndCommands()
    c->AddSeparator();
 #endif
 
-   c->AddItem(wxT("About"), _("&About Audacity..."), FN(OnAbout));
+   c->AddItem(wxT("About"), _("&About SoundModule..."), FN(OnAbout));
 
    c->EndMenu();
 
@@ -1976,6 +1979,8 @@ void AudacityProject::ModifyToolbarMenus()
       return;
    }
 
+   mCommandManager.Check(wxT("ShowSoundModuleTB"),
+                         mToolManager->IsVisible(SoundModuleBarID));
    mCommandManager.Check(wxT("ShowDeviceTB"),
                          mToolManager->IsVisible(DeviceBarID));
    mCommandManager.Check(wxT("ShowEditTB"),
@@ -5180,6 +5185,12 @@ void AudacityProject::OnContrast()
    InitContrastDialog(NULL);
 }
 
+
+void AudacityProject::OnShowSoundModuleToolBar()
+{
+   mToolManager->ShowHide(SoundModuleBarID);
+   ModifyToolbarMenus();
+}
 
 void AudacityProject::OnShowTransportToolBar()
 {

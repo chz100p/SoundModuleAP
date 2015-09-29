@@ -63,6 +63,7 @@ class TrackPanel;
 class FreqWindow;
 
 // toolbar classes
+class SoundModuleToolBar;
 class ControlToolBar;
 class DeviceToolBar;
 class EditToolBar;
@@ -355,6 +356,8 @@ class AUDACITY_DLL_API AudacityProject:  public wxFrame,
    virtual ToolsToolBar * TP_GetToolsToolBar();
    virtual ControlToolBar * TP_GetControlToolBar();
 
+   virtual SoundModuleToolBar * TP_GetSoundModuleToolBar();
+
    virtual void TP_OnPlayKey();
    virtual void TP_PushState(wxString longDesc, wxString shortDesc,
                              int flags);
@@ -368,6 +371,8 @@ class AUDACITY_DLL_API AudacityProject:  public wxFrame,
    virtual void TP_HandleResize();
 
    // ToolBar
+
+   SoundModuleToolBar *GetSoundModuleToolBar();
 
    // In the GUI, ControlToolBar appears as the "Transport Toolbar". "Control Toolbar" is historic.
    ControlToolBar *GetControlToolBar();

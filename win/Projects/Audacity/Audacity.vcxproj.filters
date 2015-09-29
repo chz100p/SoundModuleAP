@@ -67,6 +67,9 @@
     <Filter Include="includes\audacity">
       <UniqueIdentifier>{2bfa6793-371a-4d2e-b3f4-fb033a0c5729}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src/soundmodule">
+      <UniqueIdentifier>{513af47a-b169-4ff8-a9de-3cc88e6c3e23}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\AboutDialog.cpp">
@@ -836,6 +839,15 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\DeviceChange.cpp">
       <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\SoundModule\USBManager.cpp">
+      <Filter>src/soundmodule</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\export\ExportSoundModule.cpp">
+      <Filter>src/export</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\toolbars\SoundModuleToolBar.cpp">
+      <Filter>src/toolbars</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1669,6 +1681,27 @@
     </ClInclude>
     <ClInclude Include="..\..\..\src\AudioIOListener.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\SoundModule\Common.h">
+      <Filter>src/soundmodule</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\SoundModule\FlashInfo.h">
+      <Filter>src/soundmodule</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\SoundModule\Log.h">
+      <Filter>src/soundmodule</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\SoundModule\Main.h">
+      <Filter>src/soundmodule</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\SoundModule\USBManager.h">
+      <Filter>src/soundmodule</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\export\ExportSoundModule.h">
+      <Filter>src/export</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\toolbars\SoundModuleToolBar.h">
+      <Filter>src/toolbars</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

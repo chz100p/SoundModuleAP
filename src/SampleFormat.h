@@ -23,6 +23,7 @@
 #if 0
 // Moved to audacity/types.h
 typedef enum {
+   int8Sample  = 0x00010001,
    int16Sample = 0x00020001,
    int24Sample = 0x00040001,
    floatSample = 0x0004000F

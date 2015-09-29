@@ -28,6 +28,7 @@ project window.
 #include "../TrackPanel.h"
 #include "../toolbars/ToolManager.h"
 #include "../toolbars/ToolBar.h"
+#include "../toolbars/SoundModuleToolBar.h"
 #include "../toolbars/ControlToolBar.h"
 #include "../toolbars/DeviceToolBar.h"
 #include "../toolbars/EditToolBar.h"
@@ -430,6 +431,10 @@ bool ScreenshotCommand::Apply(CommandExecutionContext context)
    else if (captureMode.IsSameAs(wxT("transport")))
    {
       CaptureToolbar(context.proj->mToolManager, TransportBarID, fileName);
+   }
+   else if (captureMode.IsSameAs(wxT("soundmodule")))
+   {
+      CaptureToolbar(context.proj->mToolManager, SoundModuleBarID, fileName);
    }
    else if (captureMode.IsSameAs(wxT("mixer")))
    {

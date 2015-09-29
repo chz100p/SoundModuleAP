@@ -61,6 +61,9 @@ void InitDitherers()
 const wxChar *GetSampleFormatStr(sampleFormat format)
 {
    switch(format) {
+   case int8Sample:
+      /* i18n-hint: Audio data bit depth (precision): 8-bit integers */
+      return _("8-bit PCM");
    case int16Sample:
       /* i18n-hint: Audio data bit depth (precision): 16-bit integers */
       return _("16-bit PCM");

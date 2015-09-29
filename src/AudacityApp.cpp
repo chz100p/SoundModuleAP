@@ -199,7 +199,7 @@ It handles initialization and termination by subclassing wxApp.
 
 #endif //(__WXMSW__)
 
-#include "../images/AudacityLogoWithName.xpm"
+#include "../images/SoundModuleLogoWithName.xpm"
 
 ////////////////////////////////////////////////////////////
 /// Custom events
@@ -574,7 +574,7 @@ static wxArrayString ofqueue;
 // of Audacity.
 //
 
-#define IPC_APPL wxT("audacity")
+#define IPC_APPL wxT("soundmodule")
 #define IPC_TOPIC wxT("System")
 
 class IPCConn : public wxConnection
@@ -983,7 +983,8 @@ void AudacityApp::InitLang( const wxString & lang )
 #ifdef AUDACITY_NAME
    mLocale->AddCatalog(wxT(AUDACITY_NAME));
 #else
-   mLocale->AddCatalog(IPC_APPL);
+   //mLocale->AddCatalog(IPC_APPL);
+   mLocale->AddCatalog(wxT("Audacity"));
 #endif
 
    // Initialize internationalisation (number formats etc.)
@@ -1049,8 +1050,8 @@ bool AudacityApp::OnInit()
    wxString appName = wxT(AUDACITY_NAME);
    wxString vendorName = wxT(AUDACITY_NAME);
 #else
-   wxString vendorName = wxT("Audacity");
-   wxString appName = wxT("Audacity");
+   wxString vendorName = wxT("SoundModule");
+   wxString appName = wxT("SoundModule");
 #endif
 
    wxTheApp->SetVendorName(vendorName);
@@ -1096,9 +1097,9 @@ bool AudacityApp::OnInit()
       * The "share" and "share/doc" directories in their install path */
    #ifdef __WXGTK__
    /* On Unix systems, the default temp dir is in /var/tmp. */
-   defaultTempDir.Printf(wxT("/var/tmp/audacity-%s"), wxGetUserId().c_str());
+   defaultTempDir.Printf(wxT("/var/tmp/soundmodule-%s"), wxGetUserId().c_str());
 
-   wxString pathVar = wxGetenv(wxT("AUDACITY_PATH"));
+   wxString pathVar = wxGetenv(wxT("SOUNDMODULE_PATH"));
    if (pathVar != wxT(""))
       AddMultiPathsToPathList(pathVar, audacityPathList);
    AddUniquePathToPathList(::wxGetCwd(), audacityPathList);
@@ -1113,13 +1114,13 @@ bool AudacityApp::OnInit()
                                                wxT(INSTALL_PREFIX), wxT(AUDACITY_NAME)),
                               audacityPathList);
    #else //AUDACITY_NAME
-     AddUniquePathToPathList(wxString::Format(wxT("%s/.audacity-files"),
+     AddUniquePathToPathList(wxString::Format(wxT("%s/.soundmodule-files"),
                                               home.c_str()),
                               audacityPathList);
-    AddUniquePathToPathList(wxString::Format(wxT("%s/share/audacity"),
+    AddUniquePathToPathList(wxString::Format(wxT("%s/share/soundmodule"),
                                                wxT(INSTALL_PREFIX)),
                               audacityPathList);
-      AddUniquePathToPathList(wxString::Format(wxT("%s/share/doc/audacity"),
+      AddUniquePathToPathList(wxString::Format(wxT("%s/share/doc/soundmodule"),
                                                wxT(INSTALL_PREFIX)),
                               audacityPathList);
    #endif //AUDACITY_NAME
@@ -1145,7 +1146,7 @@ bool AudacityApp::OnInit()
    AddUniquePathToPathList(progPath, audacityPathList);
    AddUniquePathToPathList(progPath+wxT("\\Languages"), audacityPathList);
 
-   defaultTempDir.Printf(wxT("%s\\audacity_temp"),
+   defaultTempDir.Printf(wxT("%s\\soundmodule_temp"),
                          tmpDirLoc.c_str());
    #endif //__WXWSW__
 
@@ -1162,7 +1163,7 @@ bool AudacityApp::OnInit()
    AddUniquePathToPathList(progPath+wxT("/../"), audacityPathList);
    AddUniquePathToPathList(progPath+wxT("/../Resources"), audacityPathList);
 
-   defaultTempDir.Printf(wxT("%s/audacity-%s"),
+   defaultTempDir.Printf(wxT("%s/soundmodule-%s"),
                          tmpDirLoc.c_str(),
                          wxGetUserId().c_str());
    #endif //__WXMAC__
@@ -1246,7 +1247,7 @@ void AudacityApp::FinishInits()
    {
       delete parser;
 
-      wxFprintf(stderr, wxT("Audacity v%s\n"), AUDACITY_VERSION_STRING);
+      wxFprintf(stderr, wxT("SoundModule v%s\n"), AUDACITY_VERSION_STRING);
       exit(0);
    }
 
@@ -1268,7 +1269,7 @@ void AudacityApp::FinishInits()
 // with showing a dialog AND a splash screen during inits.
 #if !wxCHECK_VERSION(3, 0, 0)
    // BG: Create a temporary window to set as the top window
-   wxImage logoimage((const char **) AudacityLogoWithName_xpm);
+   wxImage logoimage((const char **) SoundModuleLogoWithName_xpm);
    logoimage.Rescale(logoimage.GetWidth() / 2, logoimage.GetHeight() / 2);
    wxBitmap logo(logoimage);
 
@@ -1281,7 +1282,7 @@ void AudacityApp::FinishInits()
                          wxDefaultPosition,
                          wxDefaultSize,
                          wxSTAY_ON_TOP);
-   temporarywindow->SetTitle(_("Audacity is starting up..."));
+   temporarywindow->SetTitle(_("SoundModule is starting up..."));
    SetTopWindow(temporarywindow);
 #endif
 
@@ -1304,7 +1305,7 @@ void AudacityApp::FinishInits()
    fileMenu->Append(wxID_NEW, wxString(_("&New")) + wxT("\tCtrl+N"));
    fileMenu->Append(wxID_OPEN, wxString(_("&Open...")) + wxT("\tCtrl+O"));
    fileMenu->AppendSubMenu(recentMenu, _("Open &Recent..."));
-   fileMenu->Append(wxID_ABOUT, _("&About Audacity..."));
+   fileMenu->Append(wxID_ABOUT, _("&About SoundModule..."));
    fileMenu->Append(wxID_PREFERENCES, wxString(_("&Preferences...")) + wxT("\tCtrl+,"));
 
    wxMenuBar *menuBar = new wxMenuBar();
@@ -1472,13 +1473,13 @@ bool AudacityApp::InitTempDir()
 
    if (temp == wxT("")) {
       // Failed
-      wxMessageBox(_("Audacity could not find a place to store temporary files.\nPlease enter an appropriate directory in the preferences dialog."));
+      wxMessageBox(_("SoundModule could not find a place to store temporary files.\nPlease enter an appropriate directory in the preferences dialog."));
 
       PrefsDialog dialog(NULL);
       dialog.ShowTempDirPage();
       dialog.ShowModal();
 
-      wxMessageBox(_("Audacity is now going to exit. Please launch Audacity again to use the new temporary directory."));
+      wxMessageBox(_("SoundModule is now going to exit. Please launch SoundModule again to use the new temporary directory."));
       return false;
    }
 
@@ -1505,23 +1506,23 @@ bool AudacityApp::InitTempDir()
 
 bool AudacityApp::CreateSingleInstanceChecker(wxString dir)
 {
-   wxString name = wxString::Format(wxT("audacity-lock-%s"), wxGetUserId().c_str());
+   wxString name = wxString::Format(wxT("soundmodule-lock-%s"), wxGetUserId().c_str());
    mChecker = new wxSingleInstanceChecker();
 
 #if defined(__UNIX__)
-   wxString sockFile(FileNames::DataDir() + wxT("/.audacity.sock"));
+   wxString sockFile(FileNames::DataDir() + wxT("/.soundmodule.sock"));
 #endif
 
-   wxString runningTwoCopiesStr = _("Running two copies of Audacity simultaneously may cause\ndata loss or cause your system to crash.\n\n");
+   wxString runningTwoCopiesStr = _("Running two copies of SoundModule simultaneously may cause\ndata loss or cause your system to crash.\n\n");
 
    if (!mChecker->Create(name, dir)) {
       // Error initializing the wxSingleInstanceChecker.  We don't know
       // whether there is another instance running or not.
 
       wxString prompt =
-         _("Audacity was not able to lock the temporary files directory.\nThis folder may be in use by another copy of Audacity.\n") +
+         _("SoundModule was not able to lock the temporary files directory.\nThis folder may be in use by another copy of SoundModule.\n") +
          runningTwoCopiesStr +
-         _("Do you still want to start Audacity?");
+         _("Do you still want to start SoundModule?");
       int action = wxMessageBox(prompt,
                                 _("Error Locking Temporary Folder"),
                                 wxYES_NO | wxICON_EXCLAMATION,
@@ -1620,10 +1621,10 @@ bool AudacityApp::CreateSingleInstanceChecker(wxString dir)
       // There is another copy of Audacity running.  Force quit.
 
       wxString prompt =
-         _("The system has detected that another copy of Audacity is running.\n") +
+         _("The system has detected that another copy of SoundModule is running.\n") +
          runningTwoCopiesStr +
-         _("Use the New or Open commands in the currently running Audacity\nprocess to open multiple projects simultaneously.\n");
-      wxMessageBox(prompt, _("Audacity is already running"),
+         _("Use the New or Open commands in the currently running SoundModule\nprocess to open multiple projects simultaneously.\n");
+      wxMessageBox(prompt, _("SoundModule is already running"),
             wxOK | wxICON_ERROR);
       delete parser;
       delete mChecker;
@@ -1717,7 +1718,7 @@ wxCmdLineParser *AudacityApp::ParseCommandLine()
    parser->AddSwitch(wxT("t"), wxT("test"), _("run self diagnostics"));
 
    /*i18n-hint: This displays the Audacity version */
-   parser->AddSwitch(wxT("v"), wxT("version"), _("display Audacity version"));
+   parser->AddSwitch(wxT("v"), wxT("version"), _("display SoundModule version"));
 
    /*i18n-hint: This is a list of one or more files that Audacity
     *           should open upon startup */
@@ -2037,11 +2038,11 @@ void AudacityApp::OnMenuExit(wxCommandEvent & event)
 void AudacityApp::AssociateFileTypes()
 {
    wxRegKey associateFileTypes;
-   associateFileTypes.SetName(wxT("HKCR\\.AUP"));
+   associateFileTypes.SetName(wxT("HKCR\\.SDM"));
    bool bKeyExists = associateFileTypes.Exists();
    if (!bKeyExists) {
       // Not at HKEY_CLASSES_ROOT. Try HKEY_CURRENT_USER.
-      associateFileTypes.SetName(wxT("HKCU\\Software\\Classes\\.AUP"));
+      associateFileTypes.SetName(wxT("HKCU\\Software\\Classes\\.SDM"));
       bKeyExists = associateFileTypes.Exists();
    }
    if (!bKeyExists) {
@@ -2054,8 +2055,8 @@ void AudacityApp::AssociateFileTypes()
          // and they got stepped on, so ask.
          int wantAssoc =
             wxMessageBox(
-               _("Audacity project (.AUP) files are not currently \nassociated with Audacity. \n\nAssociate them, so they open on double-click?"),
-               _("Audacity Project Files"),
+               _("SoundModule project (.SDM) files are not currently \nassociated with SoundModule. \n\nAssociate them, so they open on double-click?"),
+               _("SoundModule Project Files"),
                wxYES_NO | wxICON_QUESTION);
          if (wantAssoc == wxYES) {
             gPrefs->Write(wxT("/WantAssociateFiles"), true);
@@ -2064,11 +2065,11 @@ void AudacityApp::AssociateFileTypes()
             wxString root_key;
 
             root_key = wxT("HKCU\\Software\\Classes\\");
-            associateFileTypes.SetName(root_key + wxT(".AUP")); // Start again with HKEY_CLASSES_ROOT.
+            associateFileTypes.SetName(root_key + wxT(".SDM")); // Start again with HKEY_CLASSES_ROOT.
             if (!associateFileTypes.Create(true)) {
                // Not at HKEY_CLASSES_USER. Try HKEY_CURRENT_ROOT.
                root_key = wxT("HKCR\\");
-               associateFileTypes.SetName(root_key + wxT(".AUP"));
+               associateFileTypes.SetName(root_key + wxT(".SDM"));
                if (!associateFileTypes.Create(true)) {
                   // Actually, can't create keys. Empty root_key to flag failure.
                   root_key.Empty();
@@ -2077,32 +2078,32 @@ void AudacityApp::AssociateFileTypes()
             if (root_key.IsEmpty()) {
                //v Warn that we can't set keys. Ask whether to set pref for no retry?
             } else {
-               associateFileTypes = wxT("Audacity.Project"); // Finally set value for .AUP key
+               associateFileTypes = wxT("SoundModule.Project"); // Finally set value for .AUP key
 
-               associateFileTypes.SetName(root_key + wxT("Audacity.Project"));
+               associateFileTypes.SetName(root_key + wxT("SoundModule.Project"));
                if(!associateFileTypes.Exists()) {
                   associateFileTypes.Create(true);
-                  associateFileTypes = wxT("Audacity Project File");
+                  associateFileTypes = wxT("SoundModule Project File");
                }
 
-               associateFileTypes.SetName(root_key + wxT("Audacity.Project\\shell"));
+               associateFileTypes.SetName(root_key + wxT("SoundModule.Project\\shell"));
                if(!associateFileTypes.Exists()) {
                   associateFileTypes.Create(true);
                   associateFileTypes = wxT("");
                }
 
-               associateFileTypes.SetName(root_key + wxT("Audacity.Project\\shell\\open"));
+               associateFileTypes.SetName(root_key + wxT("SoundModule.Project\\shell\\open"));
                if(!associateFileTypes.Exists()) {
                   associateFileTypes.Create(true);
                }
 
-               associateFileTypes.SetName(root_key + wxT("Audacity.Project\\shell\\open\\command"));
+               associateFileTypes.SetName(root_key + wxT("SoundModule.Project\\shell\\open\\command"));
                wxString tmpRegAudPath;
                if(associateFileTypes.Exists()) {
                   tmpRegAudPath = wxString(associateFileTypes).Lower();
                }
                if (!associateFileTypes.Exists() ||
-                     (tmpRegAudPath.Find(wxT("audacity.exe")) >= 0)) {
+                     (tmpRegAudPath.Find(wxT("soundmodule.exe")) >= 0)) {
                   associateFileTypes.Create(true);
                   associateFileTypes = (wxString)argv[0] + (wxString)wxT(" \"%1\"");
                }
@@ -2111,19 +2112,19 @@ void AudacityApp::AssociateFileTypes()
                // These can be use later to support more startup messages
                // like maybe "Import into existing project" or some such.
                // Leaving here for an example...
-               associateFileTypes.SetName(root_key + wxT("Audacity.Project\\shell\\open\\ddeexec"));
+               associateFileTypes.SetName(root_key + wxT("SoundModule.Project\\shell\\open\\ddeexec"));
                if(!associateFileTypes.Exists()) {
                   associateFileTypes.Create(true);
                   associateFileTypes = wxT("%1");
                }
 
-               associateFileTypes.SetName(root_key + wxT("Audacity.Project\\shell\\open\\ddeexec\\Application"));
+               associateFileTypes.SetName(root_key + wxT("SoundModule.Project\\shell\\open\\ddeexec\\Application"));
                if(!associateFileTypes.Exists()) {
                   associateFileTypes.Create(true);
                   associateFileTypes = IPC_APPL;
                }
 
-               associateFileTypes.SetName(root_key + wxT("Audacity.Project\\shell\\open\\ddeexec\\Topic"));
+               associateFileTypes.SetName(root_key + wxT("SoundModule.Project\\shell\\open\\ddeexec\\Topic"));
                if(!associateFileTypes.Exists()) {
                   associateFileTypes.Create(true);
                   associateFileTypes = IPC_TOPIC;

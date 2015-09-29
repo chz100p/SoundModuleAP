@@ -144,6 +144,10 @@ bool EffectStereoToMono::Process()
             sampleCount rightTrackEnd = mRightTrack->TimeToLongSamples(mRightTrack->GetEndTime());
             mEnd = wxMax(leftTrackEnd, rightTrackEnd);
 
+            bGoodResult = mOutTrack->Resample(mLeftTrack->GetRate());
+            if (!bGoodResult)
+               break;
+
             bGoodResult = ProcessOne(count);
             if (!bGoodResult)
                break;

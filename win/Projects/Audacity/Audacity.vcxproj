@@ -21,6 +21,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{1D64095C-F936-4FCF-B609-56E9DDF941FA}</ProjectGuid>
     <RootNamespace>Audacity</RootNamespace>
+    <ProjectName>SoundModule</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -112,7 +113,7 @@
     </ProjectReference>
     <Link>
       <AdditionalDependencies>expat.lib;filedialog.lib;libsndfile.lib;portaudio-v19.lib;wxbase28u.lib;wxbase28u_net.lib;wxmsw28u_adv.lib;wxmsw28u_core.lib;wxmsw28u_html.lib;wxpng.lib;wxzlib.lib;wxjpeg.lib;wxtiff.lib;comctl32.lib;rpcrt4.lib;wsock32.lib;winmm.lib;oleacc.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(OutDir);$(WXWIN)\lib\vc_dll;$(GSTREAMER_SDK)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(OutDir);$(WXWIN)\lib\vc_dll;$(GSTREAMER_SDK)\lib;C:\Program Files (x86)\Windows Kits\10\Lib\10.0.10240.0\um\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <SubSystem>Windows</SubSystem>
       <StackReserveSize>8388608</StackReserveSize>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
@@ -179,7 +180,7 @@
     </ProjectReference>
     <Link>
       <AdditionalDependencies>expat.lib;filedialog.lib;libsndfile.lib;portaudio-v19.lib;wxbase28ud.lib;wxbase28ud_net.lib;wxmsw28ud_adv.lib;wxmsw28ud_core.lib;wxmsw28ud_html.lib;wxpngd.lib;wxzlibd.lib;wxjpegd.lib;wxtiffd.lib;comctl32.lib;rpcrt4.lib;wsock32.lib;winmm.lib;oleacc.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(OutDir);$(WXWIN)\lib\vc_dll;$(GSTREAMER_SDK)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(OutDir);$(WXWIN)\lib\vc_dll;$(GSTREAMER_SDK)\lib;C:\Program Files (x86)\Windows Kits\10\Lib\10.0.10240.0\um\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <StackReserveSize>8388608</StackReserveSize>
@@ -252,6 +253,7 @@
     <ClCompile Include="..\..\..\src\effects\NoiseReduction.cpp" />
     <ClCompile Include="..\..\..\src\effects\Phaser.cpp" />
     <ClCompile Include="..\..\..\src\Envelope.cpp" />
+    <ClCompile Include="..\..\..\src\export\ExportSoundModule.cpp" />
     <ClCompile Include="..\..\..\src\FFmpeg.cpp" />
     <ClCompile Include="..\..\..\src\FFT.cpp" />
     <ClCompile Include="..\..\..\src\FileFormats.cpp" />
@@ -308,6 +310,7 @@
       <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
       <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='wx3-Release|Win32'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\SoundModule\USBManager.cpp" />
     <ClCompile Include="..\..\..\src\Spectrum.cpp" />
     <ClCompile Include="..\..\..\src\SplashDialog.cpp" />
     <ClCompile Include="..\..\..\src\SseMathFuncs.cpp" />
@@ -316,6 +319,7 @@
     <ClCompile Include="..\..\..\src\TimeDialog.cpp" />
     <ClCompile Include="..\..\..\src\TimerRecordDialog.cpp" />
     <ClCompile Include="..\..\..\src\TimeTrack.cpp" />
+    <ClCompile Include="..\..\..\src\toolbars\SoundModuleToolBar.cpp" />
     <ClCompile Include="..\..\..\src\toolbars\SpectralSelectionBar.cpp" />
     <ClCompile Include="..\..\..\src\Track.cpp" />
     <ClCompile Include="..\..\..\src\TrackArtist.cpp" />
@@ -524,12 +528,19 @@
     <ClInclude Include="..\..\..\src\effects\EffectRack.h" />
     <ClInclude Include="..\..\..\src\effects\NoiseReduction.h" />
     <ClInclude Include="..\..\..\src\effects\Phaser.h" />
+    <ClInclude Include="..\..\..\src\export\ExportSoundModule.h" />
     <ClInclude Include="..\..\..\src\import\FormatClassifier.h" />
     <ClInclude Include="..\..\..\src\import\ImportGStreamer.h" />
     <ClInclude Include="..\..\..\src\import\MultiFormatReader.h" />
     <ClInclude Include="..\..\..\src\import\SpecPowerMeter.h" />
     <ClInclude Include="..\..\..\src\ModuleManager.h" />
+    <ClInclude Include="..\..\..\src\SoundModule\Common.h" />
+    <ClInclude Include="..\..\..\src\SoundModule\FlashInfo.h" />
+    <ClInclude Include="..\..\..\src\SoundModule\Log.h" />
+    <ClInclude Include="..\..\..\src\SoundModule\Main.h" />
+    <ClInclude Include="..\..\..\src\SoundModule\USBManager.h" />
     <ClInclude Include="..\..\..\src\SseMathFuncs.h" />
+    <ClInclude Include="..\..\..\src\toolbars\SoundModuleToolBar.h" />
     <ClInclude Include="..\..\..\src\toolbars\SpectralSelectionBar.h" />
     <ClInclude Include="..\..\..\src\toolbars\SpectralSelectionBarListener.h" />
     <ClInclude Include="..\..\..\src\widgets\HelpSystem.h" />
