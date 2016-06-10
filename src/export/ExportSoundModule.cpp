@@ -265,7 +265,7 @@ int ExportSoundModule::Export(AudacityProject *project,
         bool tooMany = false;
         bool tooLong = false;
         int nTotal = 0;
-        int const nMax = 4; // HEADER_COUNT_MAX;
+        int const nMax = 15; // HEADER_COUNT_MAX;
         double tTotal = 0.0;
         double const tMax = (double)SOUNDMODULE_SAMPLE_COUNT_MAX / (double)SOUNDMODULE_RATE;
         TrackListIterator iter(project->GetTracks());
@@ -315,30 +315,67 @@ int ExportSoundModule::Export(AudacityProject *project,
 
         {
             PipoApp pipo;
-            {
-            FlashDataHeader         *header = (FlashDataHeader*)&pipo.pWriteData[HEADER_START_ADDRESS];
-            memset( header, 0xAB, HEADER_PAGE_SIZE );
-            for (int n = 0; n < nTotal; ++n) {
-                DWORD dwStartAddress = (DWORD)floor(SOUNDMODULE_SAMPLE_START_ADDRESS + t0x[n] * SOUNDMODULE_RATE + 0.5);
-                DWORD dwDataSize = (DWORD)floor((t1x[n] - t0x[n]) * SOUNDMODULE_RATE + 0.5);
-                header[n].dwHeaderStartID   = HEADER_ID;
-                header[n].bHeaderSize       = (BYTE)sizeof(FlashDataHeader);
-                header[n].dwDataSize        = dwDataSize;
-                header[n].dwDataTotalPage   = (dwDataSize+FLASH_PAGE_SIZE-1)/FLASH_PAGE_SIZE;
-                header[n].bRestSize             = (BYTE)(dwDataSize % FLASH_PAGE_SIZE);
-                header[n].bStartSector      = (dwStartAddress >> 16) & 255;
-                header[n].bStartPage        = (dwStartAddress >> 8) & 255;
-                header[n].bStartByte        = dwStartAddress & 255;
-                header[n].dwHeaderEndID         = HEADER_ID;
-            }
-            ((FlashDataHeaderInfo*)&pipo.pWriteData[HEADER_INFO_ADDRESS])->bHeaderCount = nTotal;
+			memset(&pipo.pWriteData[HEADER_START_ADDRESS], 0xAB, HEADER_PAGE_SIZE);
+			memset(&pipo.pWriteData[SOUNDMODULE_SAMPLE_START_ADDRESS], 128, SOUNDMODULE_SAMPLE_COUNT_MAX);
+			{
+			if (nTotal <= HEADER_COUNT_MAX_EX_V1) {
+				FlashDataHeader         *header = (FlashDataHeader*)&pipo.pWriteData[HEADER_START_ADDRESS];
+				for (int n = 0; n < nTotal; ++n) {
+					DWORD dwStartAddress = (DWORD)floor(SOUNDMODULE_SAMPLE_START_ADDRESS + t0x[n] * SOUNDMODULE_RATE + 0.5);
+					DWORD dwDataSize = (DWORD)floor((t1x[n] - t0x[n]) * SOUNDMODULE_RATE + 0.5);
+					header[n].dwHeaderStartID = (n == 0) ? HEADER_ID : HEADER_ID_2;
+					header[n].bHeaderSize = (BYTE)sizeof(FlashDataHeader);
+					header[n].dwDataSize = dwDataSize;
+					header[n].dwDataTotalPage = (dwDataSize + FLASH_PAGE_SIZE - 1) / FLASH_PAGE_SIZE;
+					header[n].bRestSize = (BYTE)(dwDataSize % FLASH_PAGE_SIZE);
+					header[n].bStartSector = (dwStartAddress >> 16) & 255;
+					header[n].bStartPage = (dwStartAddress >> 8) & 255;
+					header[n].bStartByte = dwStartAddress & 255;
+					header[n].dwHeaderEndID = HEADER_ID;
+				}
+				((FlashDataHeaderInfo*)&pipo.pWriteData[HEADER_INFO_ADDRESS])->bHeaderCount = nTotal;
+				pipo.dwDataSize = SOUNDMODULE_SAMPLE_START_ADDRESS;
+			}
+			else {
+				DWORD dwStartAddressExV2 = (DWORD)HEADER_START_ADDRESS + nTotal * sizeof(FlashDataHeader) + sizeof(FlashDataHeaderInfo);
+				FlashDataHeader         *header = (FlashDataHeader*)&pipo.pWriteData[HEADER_START_ADDRESS];
+				for (int n = 0; n < HEADER_COUNT_MAX_EX_V1; ++n) {
+					DWORD dwStartAddress = dwStartAddressExV2 + (DWORD)floor(t0x[n] * SOUNDMODULE_RATE + 0.5);
+					DWORD dwDataSize = (DWORD)floor((t1x[n] - t0x[n]) * SOUNDMODULE_RATE + 0.5);
+					header[n].dwHeaderStartID = (n == 0) ? HEADER_ID : HEADER_ID_2;
+					header[n].bHeaderSize = (BYTE)sizeof(FlashDataHeader);
+					header[n].dwDataSize = dwDataSize;
+					header[n].dwDataTotalPage = (dwDataSize + FLASH_PAGE_SIZE - 1) / FLASH_PAGE_SIZE;
+					header[n].bRestSize = (BYTE)(dwDataSize % FLASH_PAGE_SIZE);
+					header[n].bStartSector = (dwStartAddress >> 16) & 255;
+					header[n].bStartPage = (dwStartAddress >> 8) & 255;
+					header[n].bStartByte = dwStartAddress & 255;
+					header[n].dwHeaderEndID = HEADER_ID;
+				}
+				((FlashDataHeaderInfo*)&pipo.pWriteData[HEADER_INFO_ADDRESS])->bHeaderCount = HEADER_COUNT_MAX_EX_V1;
+				((FlashDataHeaderInfo*)&pipo.pWriteData[HEADER_INFO_ADDRESS])->bEx = HEADER_EX_V2;
+				((FlashDataHeaderInfo*)&pipo.pWriteData[HEADER_INFO_ADDRESS])->wHeaderCount = nTotal;
+				header = (FlashDataHeader*)(&pipo.pWriteData[HEADER_START_ADDRESS] + sizeof(FlashDataHeaderInfo));
+				for (int n = HEADER_COUNT_MAX_EX_V1; n < nTotal; ++n) {
+					DWORD dwStartAddress = dwStartAddressExV2 + (DWORD)floor(t0x[n] * SOUNDMODULE_RATE + 0.5);
+					DWORD dwDataSize = (DWORD)floor((t1x[n] - t0x[n]) * SOUNDMODULE_RATE + 0.5);
+					header[n].dwHeaderStartID = HEADER_ID_2;
+					header[n].bHeaderSize = (BYTE)sizeof(FlashDataHeader);
+					header[n].dwDataSize = dwDataSize;
+					header[n].dwDataTotalPage = (dwDataSize + FLASH_PAGE_SIZE - 1) / FLASH_PAGE_SIZE;
+					header[n].bRestSize = (BYTE)(dwDataSize % FLASH_PAGE_SIZE);
+					header[n].bStartSector = (dwStartAddress >> 16) & 255;
+					header[n].bStartPage = (dwStartAddress >> 8) & 255;
+					header[n].bStartByte = dwStartAddress & 255;
+					header[n].dwHeaderEndID = HEADER_ID;
+				}
+				pipo.dwDataSize = dwStartAddressExV2;
+			}
             }
             //
             {
             double t0 = t0x[0];
-            double t1 = t1x[nTotal - 1];
-            pipo.dwDataSize = SOUNDMODULE_SAMPLE_START_ADDRESS;
-            memset( &pipo.pWriteData[SOUNDMODULE_SAMPLE_START_ADDRESS], 128, SOUNDMODULE_SAMPLE_COUNT_MAX );
+			double t1 = t1x[nTotal - 1];
    // Turn off logging to prevent broken pipe messages
    wxLogNull nolog;
    sampleCount maxBlockLen = SOUNDMODULE_RATE * 1 /* 44100 * 5 */;
