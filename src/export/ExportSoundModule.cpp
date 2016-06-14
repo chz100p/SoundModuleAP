@@ -260,12 +260,12 @@ int ExportSoundModule::Export(AudacityProject *project,
 
     //
     {
-        double t0x[HEADER_COUNT_MAX];
-        double t1x[HEADER_COUNT_MAX];
+        std::vector<double> t0x;
+        std::vector<double> t1x;
         bool tooMany = false;
         bool tooLong = false;
         int nTotal = 0;
-        int const nMax = 15; // HEADER_COUNT_MAX;
+        int const nMax = SOUNDMODULE_HEADER_COUNT_MAX;
         double tTotal = 0.0;
         double const tMax = (double)SOUNDMODULE_SAMPLE_COUNT_MAX / (double)SOUNDMODULE_RATE;
         TrackListIterator iter(project->GetTracks());
@@ -277,8 +277,8 @@ int ExportSoundModule::Export(AudacityProject *project,
                     break;
                 }
 
-                t0x[nTotal] = ((WaveTrack*)t)->GetStartTime();
-                t1x[nTotal] = ((WaveTrack*)t)->GetEndTime();
+                t0x.push_back(((WaveTrack*)t)->GetStartTime());
+                t1x.push_back(((WaveTrack*)t)->GetEndTime());
                 double tTime = t1x[nTotal] - t0x[nTotal];
                 if ((tTotal + tTime) > tMax) {
                     tooLong = true;
@@ -300,15 +300,15 @@ int ExportSoundModule::Export(AudacityProject *project,
         //          wxMessageBox(wxT("Sound Track is too Many!"));
         //          return eProgressFailed;
         //}
-        if (tooLong) {
+        if (tooLong) {//TODO: SM15
             wxMessageBox(wxT("Sound Track is too Long!"));
             return eProgressFailed;
         }
-        if (nTotal == 0) {
+        if (nTotal == 0) {//TODO: SM15
             wxMessageBox(wxT("No sounds to process!"));
             return eProgressFailed;
         }
-        if (t1x[nTotal - 1] - t0x[0] <= 0) {
+        if (t1x[nTotal - 1] - t0x[0] <= 0) {//TODO: SM15
             wxMessageBox(wxT("No sounds to process!"));
             return eProgressFailed;
         }
