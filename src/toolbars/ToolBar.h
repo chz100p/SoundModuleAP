@@ -63,6 +63,7 @@ DECLARE_EXPORTED_EVENT_TYPE(AUDACITY_DLL_API, EVT_TOOLBAR_UPDATED, -1);
 enum
 {
    NoBarID = -1,
+   SoundModuleBarID,
    TransportBarID,
    ToolsBarID,
    MeterBarID,

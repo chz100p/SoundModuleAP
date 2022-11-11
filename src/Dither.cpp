@@ -130,10 +130,12 @@ const float Dither::SHAPED_BS[] = { 2.033f, -2.165f, 1.959f, -1.590f, 0.6149f };
 #endif
 
 // Defines for sample conversion
+#define CONVERT_DIV8  float(1<< 7)
 #define CONVERT_DIV16 float(1<<15)
 #define CONVERT_DIV24 float(1<<23)
 
 // Dereference sample pointer and convert to float sample
+#define FROM_INT8(ptr)  (*(( char*)(ptr)) / CONVERT_DIV8 )
 #define FROM_INT16(ptr) (*((short*)(ptr)) / CONVERT_DIV16)
 #define FROM_INT24(ptr) (*((  int*)(ptr)) / CONVERT_DIV24)
 
@@ -145,6 +147,7 @@ const float Dither::SHAPED_BS[] = { 2.033f, -2.165f, 1.959f, -1.590f, 0.6149f };
                          *((float*)(ptr)))
 
 // Promote sample to range of specified type, keep it float, though
+#define PROMOTE_TO_INT8(sample)  ((sample) * CONVERT_DIV8 )
 #define PROMOTE_TO_INT16(sample) ((sample) * CONVERT_DIV16)
 #define PROMOTE_TO_INT24(sample) ((sample) * CONVERT_DIV24)
 
@@ -158,10 +161,12 @@ const float Dither::SHAPED_BS[] = { 2.033f, -2.165f, 1.959f, -1.590f, 0.6149f };
     else if (x<(min_bound)) *((ptr_type*)(ptr))=(min_bound); \
     else *((ptr_type*)(ptr))=(ptr_type)x; } while (0)
 
+#define STORE_INT8(ptr, sample)  IMPLEMENT_STORE((ptr), (sample), char, -128, 127)
 #define STORE_INT16(ptr, sample) IMPLEMENT_STORE((ptr), (sample), short, -32768, 32767)
 #define STORE_INT24(ptr, sample) IMPLEMENT_STORE((ptr), (sample), int, -8388608, 8388607)
 
 // Dither single float 'sample' and store it in pointer 'dst', using 'dither' as algorithm
+#define DITHER_TO_INT8(dither, dst, sample)  STORE_INT8((dst), dither(PROMOTE_TO_INT8(sample)))
 #define DITHER_TO_INT16(dither, dst, sample) STORE_INT16((dst), dither(PROMOTE_TO_INT16(sample)))
 #define DITHER_TO_INT24(dither, dst, sample) STORE_INT24((dst), dither(PROMOTE_TO_INT24(sample)))
 
@@ -184,6 +189,12 @@ const float Dither::SHAPED_BS[] = { 2.033f, -2.165f, 1.959f, -1.590f, 0.6149f };
    } while (0)
 
 // Shortcuts to dithering loops
+#define DITHER_INT16_TO_INT8(dither, dst, dstStride, src, srcStride, len) \
+    DITHER_LOOP(dither, DITHER_TO_INT8 , FROM_INT16, dst, int8Sample , dstStride, src, int16Sample, srcStride, len)
+#define DITHER_INT24_TO_INT8(dither, dst, dstStride, src, srcStride, len) \
+    DITHER_LOOP(dither, DITHER_TO_INT8 , FROM_INT24, dst, int8Sample , dstStride, src, int24Sample, srcStride, len)
+#define DITHER_FLOAT_TO_INT8(dither, dst, dstStride, src, srcStride, len) \
+    DITHER_LOOP(dither, DITHER_TO_INT8 , FROM_FLOAT, dst, int8Sample , dstStride, src, floatSample, srcStride, len)
 #define DITHER_INT24_TO_INT16(dither, dst, dstStride, src, srcStride, len) \
     DITHER_LOOP(dither, DITHER_TO_INT16, FROM_INT24, dst, int16Sample, dstStride, src, int24Sample, srcStride, len)
 #define DITHER_FLOAT_TO_INT16(dither, dst, dstStride, src, srcStride, len) \
@@ -194,7 +205,13 @@ const float Dither::SHAPED_BS[] = { 2.033f, -2.165f, 1.959f, -1.590f, 0.6149f };
 // Implement a dither. There are only 3 cases where we must dither,
 // in all other cases, no dithering is necessary.
 #define DITHER(dither, dst, dstFormat, dstStride, src, srcFormat, srcStride, len) \
-    do { if (srcFormat == int24Sample && dstFormat == int16Sample) \
+    do { if (srcFormat == int16Sample && dstFormat == int8Sample ) \
+        DITHER_INT16_TO_INT8(dither, dst, dstStride, src, srcStride, len); \
+    else if (srcFormat == int24Sample && dstFormat == int8Sample ) \
+        DITHER_INT24_TO_INT8(dither, dst, dstStride, src, srcStride, len); \
+    else if (srcFormat == floatSample && dstFormat == int8Sample ) \
+        DITHER_FLOAT_TO_INT8(dither, dst, dstStride, src, srcStride, len); \
+    else if (srcFormat == int24Sample && dstFormat == int16Sample) \
         DITHER_INT24_TO_INT16(dither, dst, dstStride, src, srcStride, len); \
     else if (srcFormat == floatSample && dstFormat == int16Sample) \
         DITHER_FLOAT_TO_INT16(dither, dst, dstStride, src, srcStride, len); \
@@ -287,6 +304,14 @@ void Dither::Apply(enum DitherType ditherType,
 
                 for (i = 0; i < len; i++, d += destStride, s += sourceStride)
                     *d = *s;
+            } else
+            if (sourceFormat == int8Sample )
+            {
+                char* d = (char*)dest;
+                char* s = (char*)source;
+
+                for (i = 0; i < len; i++, d += destStride, s += sourceStride)
+                    *d = *s;
             } else {
                 wxASSERT(false); // source format unknown
             }
@@ -298,6 +323,12 @@ void Dither::Apply(enum DitherType ditherType,
         // No clipping should be necessary.
         float* d = (float*)dest;
 
+        if (sourceFormat == int8Sample )
+        {
+            char* s = (char*)source;
+            for (i = 0; i < len; i++, d += destStride, s += sourceStride)
+                *d = FROM_INT8(s);
+        } else
         if (sourceFormat == int16Sample)
         {
             short* s = (short*)source;
@@ -312,6 +343,22 @@ void Dither::Apply(enum DitherType ditherType,
         } else {
             wxASSERT(false); // source format unknown
         }
+    } else
+    if (destFormat == int16Sample && sourceFormat == int8Sample )
+    {
+        // Special case when promoting 8 bit to 16 bit
+        short* d = (short*)dest;
+        char* s = (char*)source;
+        for (i = 0; i < len; i++, d += destStride, s += sourceStride)
+            *d = ((short)*s) << 8;
+    } else
+    if (destFormat == int24Sample && sourceFormat == int8Sample )
+    {
+        // Special case when promoting 8 bit to 24 bit
+        int* d = (int*)dest;
+        char* s = (char*)source;
+        for (i = 0; i < len; i++, d += destStride, s += sourceStride)
+            *d = ((int)*s) << 16;
     } else
     if (destFormat == int24Sample && sourceFormat == int16Sample)
     {

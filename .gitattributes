@@ -1,0 +1,7 @@
+# Normalize line endings of all files that Git considers to be text
+* text=auto
+#
+*.bmp -text
+*.ico -text
+*.rtf -text
+

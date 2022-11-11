@@ -73,8 +73,8 @@
 			<Tool
 				Name="VCLinkerTool"
 				LinkLibraryDependencies="false"
-				AdditionalDependencies="expat.lib filedialog.lib libsndfile.lib portaudio-v19.lib wxbase28u.lib wxbase28u_net.lib wxmsw28u_adv.lib wxmsw28u_core.lib wxmsw28u_html.lib wxpng.lib wxzlib.lib wxjpeg.lib wxtiff.lib comctl32.lib rpcrt4.lib wsock32.lib winmm.lib oleacc.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib"
-				AdditionalLibraryDirectories="&quot;$(OutDir)&quot;;&quot;$(WXWIN)\lib\vc_dll&quot;;&quot;$(GSTREAMER_SDK)\lib&quot;"
+				AdditionalDependencies="expat.lib filedialog.lib libsndfile.lib portaudio-v19.lib wxbase28u.lib wxbase28u_net.lib wxmsw28u_adv.lib wxmsw28u_core.lib wxmsw28u_html.lib wxpng.lib wxzlib.lib wxjpeg.lib wxtiff.lib comctl32.lib rpcrt4.lib wsock32.lib winmm.lib oleacc.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib hid.lib"
+				AdditionalLibraryDirectories="&quot;$(OutDir)&quot;;&quot;$(WXWIN)\lib\vc_dll&quot;;&quot;$(GSTREAMER_SDK)\lib&quot;;C:\WinDDK\7600.16385.1\lib\win7\i386"
 				IgnoreDefaultLibraryNames="dsound.lib"
 				SubSystem="2"
 				StackReserveSize="8388608"
@@ -162,9 +162,9 @@
 			<Tool
 				Name="VCLinkerTool"
 				LinkLibraryDependencies="false"
-				AdditionalDependencies="expat.lib filedialog.lib libsndfile.lib portaudio-v19.lib wxbase28ud.lib wxbase28ud_net.lib wxmsw28ud_adv.lib wxmsw28ud_core.lib wxmsw28ud_html.lib wxpngd.lib wxzlibd.lib wxjpegd.lib wxtiffd.lib comctl32.lib rpcrt4.lib wsock32.lib winmm.lib oleacc.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib"
+				AdditionalDependencies="expat.lib filedialog.lib libsndfile.lib portaudio-v19.lib wxbase28ud.lib wxbase28ud_net.lib wxmsw28ud_adv.lib wxmsw28ud_core.lib wxmsw28ud_html.lib wxpngd.lib wxzlibd.lib wxjpegd.lib wxtiffd.lib comctl32.lib rpcrt4.lib wsock32.lib winmm.lib oleacc.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib hid.lib"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="&quot;$(OutDir)&quot;;&quot;$(WXWIN)\lib\vc_dll&quot;;&quot;$(GSTREAMER_SDK)\lib&quot;"
+				AdditionalLibraryDirectories="&quot;$(OutDir)&quot;;&quot;$(WXWIN)\lib\vc_dll&quot;;&quot;$(GSTREAMER_SDK)\lib&quot;;C:\WinDDK\7600.16385.1\lib\win7\i386"
 				IgnoreDefaultLibraryNames="dsound.lib"
 				GenerateDebugInformation="true"
 				SubSystem="2"
@@ -1337,6 +1337,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\src\export\ExportOreNoKidouon.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\export\ExportOreNoKidouon.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\src\export\ExportPCM.cpp"
 				>
 			</File>
@@ -2225,6 +2233,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\src\toolbars\OreNoKidouonToolBar.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\toolbars\OreNoKidouonToolBar.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\src\toolbars\SelectionBar.cpp"
 				>
 			</File>
@@ -2900,6 +2916,34 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\effects\lv2\LV2PortGroup.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="src/orenokidouon"
+			>
+			<File
+				RelativePath="..\..\..\src\PipoWinApp\Source\Common.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\PipoWinApp\Source\FlashInfo.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\PipoWinApp\Source\Log.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\PipoWinApp\Source\Main.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\PipoWinApp\Source\USBManager.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\PipoWinApp\Source\USBManager.h"
 				>
 			</File>
 		</Filter>

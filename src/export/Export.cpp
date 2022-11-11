@@ -56,6 +56,7 @@
 #include "ExportCL.h"
 #include "ExportMP2.h"
 #include "ExportFFmpeg.h"
+#include "ExportSoundModule.h"
 
 #include "sndfile.h"
 
@@ -313,6 +314,9 @@ Exporter::Exporter()
 #if defined(USE_FFMPEG)
    RegisterPlugin(New_ExportFFmpeg());
 #endif
+
+   // SoundModule export
+   RegisterPlugin(New_ExportSoundModule());
 }
 
 Exporter::~Exporter()

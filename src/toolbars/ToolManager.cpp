@@ -48,6 +48,7 @@
 #include <wx/popupwin.h>
 
 #include "ToolManager.h"
+#include "SoundModuleToolBar.h"
 #include "ControlToolBar.h"
 #include "DeviceToolBar.h"
 #include "EditToolBar.h"
@@ -405,6 +406,7 @@ ToolManager::ToolManager( AudacityProject *parent )
 
    // Create all of the toolbars
    mBars[ ToolsBarID ]         = new ToolsToolBar();
+   mBars[ SoundModuleBarID ]   = new SoundModuleToolBar();
    mBars[ TransportBarID ]     = new ControlToolBar();
    mBars[ RecordMeterBarID ]   = new MeterToolBar( parent, RecordMeterBarID );
    mBars[ PlayMeterBarID ]     = new MeterToolBar( parent, PlayMeterBarID );

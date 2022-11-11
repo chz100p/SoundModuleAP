@@ -142,6 +142,7 @@ scroll information.  It also has some status flags.
 #include "FileDialog.h"
 
 #include "toolbars/ToolManager.h"
+#include "toolbars/SoundModuleToolBar.h"
 #include "toolbars/ControlToolBar.h"
 #include "toolbars/DeviceToolBar.h"
 #include "toolbars/EditToolBar.h"
@@ -509,6 +510,7 @@ AudacityProject *CreateNewAudacityProject()
    // Okay, GetActiveProject() is ready. Now we can get its CommandManager,
    // and add the shortcut keys to the tooltips.
    p->GetControlToolBar()->RegenerateToolsTooltips();
+   p->GetSoundModuleToolBar()->RegenerateToolsTooltips();
 
    ModuleManager::Get().Dispatch(ProjectInitialized);
 
@@ -733,7 +735,7 @@ END_EVENT_TABLE()
 AudacityProject::AudacityProject(wxWindow * parent, wxWindowID id,
                                  const wxPoint & pos,
                                  const wxSize & size)
-   : wxFrame(parent, id, wxT("Audacity"), pos, size),
+   : wxFrame(parent, id, wxT("SoundModule"), pos, size),
      mRegionSave(),
      mLastPlayMode(normalPlay),
      mRate((double) gPrefs->Read(wxT("/SamplingRate/DefaultProjectSampleRate"), AudioIO::GetOptimalSupportedSampleRate())),
@@ -1014,7 +1016,7 @@ AudacityProject::AudacityProject(wxWindow * parent, wxWindowID id,
 
    mTrackFactory = new TrackFactory(mDirManager);
 
-   wxString msg = wxString::Format(_("Welcome to Audacity version %s"),
+   wxString msg = wxString::Format(_("Welcome to SoundModule version %s"),
                                    AUDACITY_VERSION_STRING);
    mStatusBar->SetStatusText(msg);
    mLastStatusUpdateTime = ::wxGetUTCTime();
@@ -1170,7 +1172,7 @@ wxString AudacityProject::GetName()
 
    // Chop off the extension
    size_t len = name.Len();
-   if (len > 4 && name.Mid(len - 4) == wxT(".aup"))
+   if (len > 4 && name.Mid(len - 4) == wxT(".sdm"))
       name = name.Mid(0, len - 4);
 
    return name;
@@ -1181,7 +1183,7 @@ void AudacityProject::SetProjectTitle()
    wxString name = GetName();
    if( name.IsEmpty() )
    {
-      name = wxT("Audacity");
+      name = wxT("SoundModule");
    }
 
    if (mIsRecovered)
@@ -2350,7 +2352,7 @@ void AudacityProject::OpenFiles(AudacityProject *proj)
     * and save dialogues, for the option that only shows project files created
     * with Audacity. Do not include pipe symbols or .aup (this extension will
     * now be added automatically for the Save Projects dialogues).*/
-   wxArrayString selectedFiles = ShowOpenDialog(_("Audacity projects"), wxT("*.aup"));
+   wxArrayString selectedFiles = ShowOpenDialog(_("SoundModule projects"), wxT("*.sdm"));
    if (selectedFiles.GetCount() == 0) {
       gPrefs->Write(wxT("/LastOpenType"),wxT(""));
       gPrefs->Flush();
@@ -2403,10 +2405,10 @@ void AudacityProject::OpenFiles(AudacityProject *proj)
 // Most of this string was duplicated 3 places. Made the warning consistent in this global.
 // The %s is to be filled with the version string.
 static wxString gsLegacyFileWarning =
-_("This file was saved by Audacity version %s. The format has changed. \
-\n\nAudacity can try to open and save this file, but saving it in this \
+_("This file was saved by SoundModule version %s. The format has changed. \
+\n\nSoundModule can try to open and save this file, but saving it in this \
 \nversion will then prevent any 1.2 or earlier version opening it. \
-\n\nAudacity might corrupt the file in opening it, so you should \
+\n\nSoundModule might corrupt the file in opening it, so you should \
 back it up first. \
 \n\nOpen this file now?");
 
@@ -2449,10 +2451,10 @@ void AudacityProject::OpenFile(wxString fileName, bool addtohistory)
    // Data loss may occur if users mistakenly try to open ".aup.bak" files
    // left over from an unsuccessful save or by previous versions of Audacity.
    // So we always refuse to open such files.
-   if (fileName.Lower().EndsWith(wxT(".aup.bak")))
+   if (fileName.Lower().EndsWith(wxT(".sdm.bak")))
    {
       wxMessageBox(
-         _("You are trying to open an automatically created backup file.\nDoing this may result in severe data loss.\n\nPlease open the actual Audacity project file instead."),
+         _("You are trying to open an automatically created backup file.\nDoing this may result in severe data loss.\n\nPlease open the actual SoundModule project file instead."),
          _("Warning - Backup File Detected"),
          wxOK | wxCENTRE, this);
       return;
@@ -2502,7 +2504,7 @@ void AudacityProject::OpenFile(wxString fileName, bool addtohistory)
       // Convert to the new format.
       bool success = ConvertLegacyProjectFile(wxFileName(fileName));
       if (!success) {
-         wxMessageBox(_("Audacity was unable to convert an Audacity 1.0 project to the new project format."),
+         wxMessageBox(_("SoundModule was unable to convert an SoundModule 1.0 project to the new project format."),
                       _("Error Opening Project"),
                       wxOK | wxCENTRE, this);
          return;
@@ -2876,7 +2878,7 @@ bool AudacityProject::HandleXMLTag(const wxChar *tag, const wxChar **attrs)
                projPath = wxT("");
             } else
             {
-               realFileName += wxT(".aup");
+               realFileName += wxT(".sdm");
                projPath = realFileDir.GetFullPath();
                mFileName = wxFileName(projPath, realFileName).GetFullPath();
                projName = value;
@@ -2964,7 +2966,7 @@ bool AudacityProject::HandleXMLTag(const wxChar *tag, const wxChar **attrs)
    {
       wxString msg;
       /* i18n-hint: %s will be replaced by the version number.*/
-      msg.Printf(_("This file was saved using Audacity %s.\nYou are using Audacity %s. You may need to upgrade to a newer version to open this file."),
+      msg.Printf(_("This file was saved using SoundModule %s.\nYou are using SoundModule %s. You may need to upgrade to a newer version to open this file."),
                  audacityVersion.c_str(),
                  AUDACITY_VERSION_STRING);
       wxMessageBox(msg,
@@ -3088,7 +3090,7 @@ void AudacityProject::WriteXML(XMLWriter &xmlFile)
 {
    // Warning: This block of code is duplicated in Save, for now...
    wxString project = mFileName;
-   if (project.Len() > 4 && project.Mid(project.Len() - 4) == wxT(".aup"))
+   if (project.Len() > 4 && project.Mid(project.Len() - 4) == wxT(".sdm"))
       project = project.Mid(0, project.Len() - 4);
    wxString projName = wxFileNameFromPath(project) + wxT("_data");
    // End Warning -DMM
@@ -3263,7 +3265,7 @@ bool AudacityProject::Save(bool overwrite /* = true */ ,
 
       // This block of code is duplicated in WriteXML, for now...
       wxString project = mFileName;
-      if (project.Len() > 4 && project.Mid(project.Len() - 4) == wxT(".aup"))
+      if (project.Len() > 4 && project.Mid(project.Len() - 4) == wxT(".sdm"))
          project = project.Mid(0, project.Len() - 4);
       wxString projName = wxFileNameFromPath(project) + wxT("_data");
       wxString projPath = wxPathOnly(project);
@@ -3370,7 +3372,7 @@ bool AudacityProject::Save(bool overwrite /* = true */ ,
       if (mIsRecovered)
       {
          // This was a recovered file, that is, we have just overwritten the
-         // old, crashed .aup file. There may still be orphaned blockfiles in
+         // old, crashed .sdm file. There may still be orphaned blockfiles in
          // this directory left over from the crash, so we delete them now
          mDirManager->RemoveOrphanBlockfiles();
 
@@ -3584,7 +3586,7 @@ void AudacityProject::AddImportedTracks(wxString fileName,
 
    if (initiallyEmpty && mDirManager->GetProjectName() == wxT("")) {
       wxString name = fileName.AfterLast(wxFILE_SEP_PATH).BeforeLast(wxT('.'));
-      mFileName =::wxPathOnly(fileName) + wxFILE_SEP_PATH + name + wxT(".aup");
+      mFileName =::wxPathOnly(fileName) + wxFILE_SEP_PATH + name + wxT(".sdm");
       SetProjectTitle();
    }
 
@@ -3689,7 +3691,7 @@ bool AudacityProject::SaveAs(bool bWantSaveCompressed /*= false*/)
    wxString path = wxPathOnly(mFileName);
    wxString fName;
 
-   wxString ext = wxT(".aup");
+   wxString ext = wxT(".sdm");
 
    fName = GetName().Len()? GetName() + ext : wxString(wxT(""));
 
@@ -3701,7 +3703,7 @@ bool AudacityProject::SaveAs(bool bWantSaveCompressed /*= false*/)
    {
       if (ShowWarningDialog(this, wxT("FirstProjectSave"),
                            _("\
-'Save Compressed Project' is for an Audacity project, not an audio file.\n\
+'Save Compressed Project' is for an SoundModule project, not an audio file.\n\
 For an audio file that will open in other apps, use 'Export'.\n\n\
 \
 Compressed project files are a good way to transmit your project online, \n\
@@ -3717,7 +3719,7 @@ each compressed track.\n"),
    {
       if (ShowWarningDialog(this, wxT("FirstProjectSave"),
                            _("\
-'Save Project' is for an Audacity project, not an audio file.\n\
+'Save Project' is for an SoundModule project, not an audio file.\n\
 For an audio file that will open in other apps, use 'Export'.\n"),
                            true) != wxID_OK)
          return false;
@@ -3727,7 +3729,7 @@ For an audio file that will open in other apps, use 'Export'.\n"),
    fName = FileSelector(
       sDialogTitle,
       path, fName, wxT(""),
-      _("Audacity projects") + static_cast<wxString>(wxT(" (*.aup)|*.aup")),
+      _("SoundModule projects") + static_cast<wxString>(wxT(" (*.sdm)|*.sdm")),
       // JKC: I removed 'wxFD_OVERWRITE_PROMPT' because we are checking
       // for overwrite ourselves later, and we disallow it.
       // We disallow overwrite because we would have to delete the many
@@ -3738,7 +3740,7 @@ For an audio file that will open in other apps, use 'Export'.\n"),
       return false;
 
    size_t len = fName.Len();
-   if (len > 4 && fName.Mid(len - 4) == wxT(".aup"))
+   if (len > 4 && fName.Mid(len - 4) == wxT(".sdm"))
       fName = fName.Mid(0, len - 4);
 
    wxString oldFileName = mFileName;
@@ -4079,6 +4081,30 @@ void AudacityProject::SkipEnd(bool shift)
    // Make sure the end of the track is visible
    mTrackPanel->ScrollIntoView(len);
    mTrackPanel->Refresh(false);
+}
+
+
+////////////////////////////////////////////////////////////
+//  This fetches a pointer to the SoundModule Toolbar.  It may
+//  either be docked or floating out in the open.
+////////////////////////////////////////////////////////////
+SoundModuleToolBar *AudacityProject::GetSoundModuleToolBar()
+{
+   return (SoundModuleToolBar *)
+          (mToolManager ?
+           mToolManager->GetToolBar(SoundModuleBarID) :
+           NULL);
+}
+
+
+//JKC: same as above *except* this a virtual function that
+//can be called from the track panel callback.
+//It seems a little crazy doing this but TrackArtist
+//needs to get information about the tool bar state and
+//I don't currently see a cleaner way.
+SoundModuleToolBar * AudacityProject::TP_GetSoundModuleToolBar()
+{
+   return GetSoundModuleToolBar();
 }
 
 

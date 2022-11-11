@@ -42,7 +42,7 @@ most commonly asked questions about Audacity.
 #include "Prefs.h"
 #include "HelpText.h"
 
-#include "../images/AudacityLogoWithName.xpm"
+#include "../images/SoundModuleLogoWithName.xpm"
 
 SplashDialog * SplashDialog::pSelf=NULL;
 
@@ -59,7 +59,7 @@ END_EVENT_TABLE()
 IMPLEMENT_CLASS(SplashDialog, wxDialog)
 
 SplashDialog::SplashDialog(wxWindow * parent)
-   :  wxDialog(parent, -1, _("Welcome to Audacity!"),
+   :  wxDialog(parent, -1, _("Welcome to SoundModule!"),
       wxPoint( -1, 60 ), // default x position, y position 60 pixels from top of screen.
       wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
 {
@@ -82,8 +82,8 @@ void SplashDialog::Populate( ShuttleGui & S )
    gPrefs->Read(wxT("/GUI/ShowSplashScreen"), &bShow, true );
    S.StartVerticalLay(1);
 
-   //v For now, change to AudacityLogoWithName via old-fashioned ways, not Theme.
-   m_pLogo = new wxBitmap((const char **) AudacityLogoWithName_xpm); //v
+   //v For now, change to SoundModuleLogoWithName via old-fashioned ways, not Theme.
+   m_pLogo = new wxBitmap((const char **) SoundModuleLogoWithName_xpm); //v
 
    // JKC: Resize to 50% of size.  Later we may use a smaller xpm as
    // our source, but this allows us to tweak the size - if we want to.
@@ -95,7 +95,7 @@ void SplashDialog::Populate( ShuttleGui & S )
    wxBitmap RescaledBitmap( RescaledImage );
    m_pIcon =
        new wxStaticBitmap(S.GetParent(), -1,
-                          //*m_pLogo, //v theTheme.Bitmap(bmpAudacityLogoWithName),
+                          //*m_pLogo, //v theTheme.Bitmap(bmpSoundModuleLogoWithName),
                           RescaledBitmap,
                           wxDefaultPosition,
                           wxSize(int(LOGOWITHNAME_WIDTH*fScale), int(LOGOWITHNAME_HEIGHT*fScale)));

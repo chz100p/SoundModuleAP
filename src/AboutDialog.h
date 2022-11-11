@@ -52,6 +52,7 @@ class AboutDialog:public wxDialog {
    };
 
    AboutDialogCreditItemsList creditItems;
+   void PopulateSoundModulePage( ShuttleGui & S );
    void PopulateAudacityPage( ShuttleGui & S );
    void PopulateLicensePage( ShuttleGui & S );
    void PopulateInformationPage (ShuttleGui & S );
