@@ -32,9 +32,11 @@ extern "C" {
 #    define dlclose(lib) FreeLibrary((HMODULE)lib)
 #    ifdef _MSC_VER
 #        define __func__ __FUNCTION__
+#if _MSC_VER < 1900
 #        define INFINITY DBL_MAX + DBL_MAX
 #        define NAN INFINITY - INFINITY
 #        define snprintf _snprintf
+#endif
 #    endif
 static inline char* dlerror(void) { return "Unknown error"; }
 #else

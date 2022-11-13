@@ -22,10 +22,14 @@
 // #define HAVE_LIBM 1
 
 /* Define to 1 if you have the `lrint' function. */
-// #define HAVE_LRINT 1
+#if _MSC_VER >= 1600
+#define HAVE_LRINT 1
+#endif
 
 /* Define to 1 if you have the `lrintf' function. */
-// #define HAVE_LRINTF 1
+#if _MSC_VER >= 1600
+#define HAVE_LRINTF 1
+#endif
 
 /* Define to 1 if you have the `malloc' function. */
 #define HAVE_MALLOC 1

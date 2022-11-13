@@ -90,16 +90,28 @@
 #define HAVE_FREE 1
 
 /* Define to 1 if you have the <inttypes.h> header file. */
+#if _MSC_VER < 1900
 /* #undef HAVE_INTTYPES_H */
+#else
+#define HAVE_INTTYPES_H 1
+#endif
 
 /* Define to 1 if you have the `m' library (-lm). */
+#if _MSC_VER < 1900
 /* #undef HAVE_LIBM */
+#else
+#define HAVE_LIBM 1
+#endif
 
 /* Define if you have C99's lrint function. */
-/* #undef HAVE_LRINT */
+#if _MSC_VER >= 1600
+#define HAVE_LRINT 1
+#endif
 
 /* Define if you have C99's lrintf function. */
-/* #undef HAVE_LRINTF */
+#if _MSC_VER >= 1600
+#define HAVE_LRINTF 1
+#endif
 
 /* Define to 1 if you have the `malloc' function. */
 #define HAVE_MALLOC 1
@@ -123,7 +135,11 @@
 #define HAVE_SNDFILE 1
 
 /* Define to 1 if you have the <stdint.h> header file. */
+#if _MSC_VER < 1900
 /* #undef HAVE_STDINT_H */
+#else
+#define HAVE_STDINT_H 1
+#endif
 
 /* Define to 1 if you have the <stdlib.h> header file. */
 #define HAVE_STDLIB_H 1

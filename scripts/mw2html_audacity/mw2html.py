@@ -118,14 +118,14 @@ def normalize_url(url, lower=True):
     if lower:
         url = url.lower()
 
-    if url.startswith('http://'):
-        url = url[len('http://'):]
+    if url.startswith('https://'):
+        url = url[len('https://'):]
     if url.startswith('www.'):
         url = url[len('www.'):]
 
     url = url.strip('/')
 
-    url = 'http://' + url
+    url = 'https://' + url
 
     urlparse.urljoin(config.rooturl, url)
 
@@ -273,10 +273,10 @@ def pos_html_transform(doc, url):
 
     if config.special_mode:
         # Remove external link rel stylesheet
-        doc = re.sub(r'<link rel="stylesheet" href="http://[\s\S]+?/>', r'', doc)
+        doc = re.sub(r'<link rel="stylesheet" href="https://[\s\S]+?/>', r'', doc)
 
         # Remove external javascript
-        doc = re.sub(r'<script type="text/javascript" src="http://[\s\S]+?</script>', r'', doc)
+        doc = re.sub(r'<script type="text/javascript" src="https://[\s\S]+?</script>', r'', doc)
 
     # Replace remaining text with footer, if available (this needs to be done after parse_html to avoid rewriting of urls
     if config.footer is not None:
@@ -412,7 +412,7 @@ def monobook_hack_skin_css(doc, url):
 
     # Remove external link icons.
     if config.remove_png:
-        doc = re.sub(r'#bodyContent a\[href \^="http://"\][\s\S]+?\}', r'', doc)
+        doc = re.sub(r'#bodyContent a\[href \^="https://"\][\s\S]+?\}', r'', doc)
 
     return doc
 
@@ -528,7 +528,7 @@ def url_open(url):
         if L[1] != domain:
             conn.close()
             print "connection to", domain, "closed."
-            conn = httplib.HTTPConnection(L[1])
+            conn = httplib.HTTPSConnection(L[1])
             domain = L[1]
             print "connection to", domain, "opened."
 
@@ -557,13 +557,13 @@ def url_open(url):
                 if r.status == 500:
                     print "   eventually this error might be recovered. let's try again."
                     print '   reconnecting...'
-                    conn = httplib.HTTPConnection(domain)
+                    conn = httplib.HTTPSConnection(domain)
                     attempts += 1
                     continue
                 if r.status == 403:
                     print "   that shouldn't happen, but let's try again anyway."
                     print '   reconnecting...'
-                    conn = httplib.HTTPConnection(domain)
+                    conn = httplib.HTTPSConnection(domain)
                     attempts += 1
                     continue
                 if attempts != 0:
@@ -578,7 +578,7 @@ def url_open(url):
                 if e.__class__.__name__ in ['BadStatusLine', 'ImproperConnectionState', 'NotConnected', 'IncompleteRead', 'ResponseNotReady']:
                     print "eventually this error might be recovered. let's try again."
                     print 'reconnecting...'
-                    conn = httplib.HTTPConnection(domain)
+                    conn = httplib.HTTPSConnection(domain)
                     attempts += 1
                 else:
                     print "it's not possible to recover this error."
@@ -914,7 +914,7 @@ def run(out=sys.stdout):
         sys.exit(1)
 
     domain = get_domain(config.rooturl)
-    conn = httplib.HTTPConnection(domain)
+    conn = httplib.HTTPSConnection(domain)
     print 'connection established to:', domain
     complete = set()
     pending = set([config.rooturl])

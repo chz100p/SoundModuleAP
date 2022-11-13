@@ -78,16 +78,30 @@ void nyquist_printf(char *format, ...);
 #undef HAVE_GMTIME_R
 
 /* Define to 1 if you have the <inttypes.h> header file. */
+#if _MSC_VER < 1900
 #define HAVE_INTTYPES_H 0
+#else
+#define HAVE_INTTYPES_H 1
+#endif
 
 /* Define if you have C99's lrint function. */
+#if _MSC_VER < 1900
 #define HAVE_LRINT 0
+#else
+#define HAVE_LRINT 1
+#endif
 
 /* Define if you have C99's lrintf function. */
+#if _MSC_VER < 1900
 #define HAVE_LRINTF 0
+#else
+#define HAVE_LRINTF 1
+#endif
 
 /* Define to 1 if you have the `snprintf' function. */
+#if _MSC_VER < 1900
 #define snprintf _snprintf
+#endif
 #define HAVE_SNPRINTF 1
 
 /* Define to 1 if the system has the type `ssize_t'. */
@@ -95,7 +109,11 @@ void nyquist_printf(char *format, ...);
 #define HAVE_SSIZE_T 1
 
 /* Define to 1 if you have the <stdint.h> header file. */
+#if _MSC_VER < 1900
 #define HAVE_STDINT_H 0
+#else
+#define HAVE_STDINT_H 1
+#endif
 
 /* Define to 1 if you have the <sys/stat.h> header file. */
 #define HAVE_SYS_STAT_H 1
@@ -107,7 +125,11 @@ void nyquist_printf(char *format, ...);
 #define HAVE_SYS_WAIT_H 1
 
 /* Define to 1 if you have the <unistd.h> header file. */
+#if _MSC_VER < 1900
 #define HAVE_UNISTD_H 0
+#else
+#define HAVE_UNISTD_H 1
+#endif
 
 /* Define to 1 if you have the `vsnprintf' function. */
 #define HAVE_VSNPRINTF 1

@@ -77,7 +77,7 @@
 	#include	<math.h>
 
 #elif (defined (WIN32) || defined (_WIN32))
-
+#if _MSC_VER < 1600
 	#undef		HAVE_LRINT_REPLACEMENT
 	#define		HAVE_LRINT_REPLACEMENT	1
 	#include	<math.h>
@@ -110,6 +110,7 @@
 
 		return intgr ;
 	}
+#endif
 
 #elif (defined (__MWERKS__) && defined (macintosh))
 

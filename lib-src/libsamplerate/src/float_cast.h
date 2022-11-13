@@ -128,7 +128,11 @@
 
 	#include	<math.h>
 
-	/*
+#if _MSC_VER >= 1600
+# define HAVE__LRINT 1
+# define HAVE__LRINTF 1
+#else
+/*
 	**	Win32 doesn't seem to have these functions.
 	**	Therefore implement inline versions of these functions here.
 	*/
@@ -156,6 +160,7 @@
 
 		return intgr ;
 	}
+#endif
 
 #elif (defined (__MWERKS__) && defined (macintosh))
 
