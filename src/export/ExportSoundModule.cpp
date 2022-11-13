@@ -425,7 +425,21 @@ int ExportSoundModule::Export(AudacityProject *project,
                wxMessageBox(wxT("Open USB Failed!"));
                break;
            default:
-               wxMessageBox(wxT("SoundModule(USB) WriteData Failed!"));
+			   switch (updateResult)
+			   {
+			   case eProgressSuccess:
+				   break;
+			   case eProgressCancelled:
+				   wxMessageBox(wxT("SoundModule(USB) WriteData Cancelled!"));
+				   break;
+			   case eProgressStopped:
+				   wxMessageBox(wxT("SoundModule(USB) WriteData Stopped!"));
+				   break;
+			   case eProgressFailed:
+			   default:
+				   wxMessageBox(wxT("SoundModule(USB) WriteData Failed!"));
+				   break;
+			   }
            }
            //return eProgressFailed;
        }
@@ -508,7 +522,7 @@ int PipoApp::WriteData(ProgressDialog *progress)
         dwRoop++;
     }
     
-    for( i = 0; i < dwRoop; i++ )
+	for (i = 0; updateResult == eProgressSuccess && i < dwRoop; i++)
     {
         if( dataSize < USB_BUFFER_SIZE )
         {
