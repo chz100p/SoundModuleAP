@@ -81,7 +81,7 @@ Name: "japanese"; MessagesFile: "compiler:Languages\Japanese.isl"
 ; Name: "ukrainian"; MessagesFile: "compiler:Languages\Ukrainian.isl"
 
 [Tasks]
-Name: desktopicon; Description: "Create a &desktop icon"; GroupDescription: "Additional icons:"
+Name: desktopicon; Description: "Create a &desktop icon"; GroupDescription: "Additional icons:"; Flags: unchecked
 Name: resetPrefs; Description:  "Reset Preferences"; Flags: unchecked
 ; No longer allow user to choose whether to associate AUP file type with Audacity.
 ; Name: associate_aup; Description: "&Associate Audacity project files"; GroupDescription: "Other tasks:"; Flags: checkedonce
@@ -93,8 +93,8 @@ Source: "..\README.txt"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\LICENSE.txt"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\win\release\soundmodule.exe"; DestDir: "{app}"; Flags: ignoreversion
 
-; Manual, which should be got from the manual wiki using ..\scripts\mw2html_audacity\wiki2htm.bat
-Source: "..\help\manual\*"; DestDir: "{app}\help\manual\"; Flags: ignoreversion recursesubdirs
+;; Manual, which should be got from the manual wiki using ..\scripts\mw2html_audacity\wiki2htm.bat
+;Source: "..\help\manual\*"; DestDir: "{app}\help\manual\"; Flags: ignoreversion recursesubdirs
 
 Source: "..\presets\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs
 
@@ -117,8 +117,8 @@ Source: "..\win\release\wxmsw28u_html_vc_custom.dll"; DestDir: "{app}"; Flags: i
 ; "C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\redist\x86\Microsoft.VC120.CRT\"
 ; or "C:\Program Files\Microsoft Visual Studio 12.0\VC\redist\x86\Microsoft.VC120.CRT\"
 ; according to your system 
-Source: "..\win\release\msvcp120.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\win\release\msvcr120.dll"; DestDir: "{app}"; Flags: ignoreversion
+;Source: "..\win\release\msvcp120.dll"; DestDir: "{app}"; Flags: ignoreversion
+;Source: "..\win\release\msvcr120.dll"; DestDir: "{app}"; Flags: ignoreversion
 
 Source: "..\win\release\languages\*"; DestDir: "{app}\Languages\"; Flags: ignoreversion recursesubdirs
 ; We don't currently ship any modules, so the next line is commented out
@@ -204,4 +204,77 @@ Root: HKCR; Subkey: "SoundModule.Project\shell\open\command"; ValueType: string;
 
 [Run]
 Filename: "{app}\soundmodule.exe"; Description: "Launch SoundModule"; Flags: nowait postinstall skipifsilent
+
+;
+;vc_redist 2022
+#define VCmsg32 "Installing Microsoft Visual C++ Redistributable x86...."
+#define VCmsg64 "Installing Microsoft Visual C++ Redistributable x64...."
+
+[Files]
+Source: C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Redist\MSVC\v143\vc_redist.x86.exe; DestDir: {tmp}; Flags: deleteafterinstall ignoreversion
+;Source: C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Redist\MSVC\v143\vc_redist.x64.exe; DestDir: {tmp}; Flags: deleteafterinstall ignoreversion; Check: IsWin64
+
+[Run]
+Filename: {tmp}\vc_redist.x86.exe; Parameters: /quiet /norestart; StatusMsg: "{#VCmsg32}"; Check: not VCRuntime32Installed
+;Filename: {tmp}\vc_redist.x64.exe; Parameters: /quiet /norestart; StatusMsg: "{#VCmsg64}"; Check: IsWin64 and not VCRuntime64Installed
+
+[Code]
+function VCRuntime32Installed: Boolean;
+ var
+  required_major: Cardinal;
+  required_minor: Cardinal;
+  required_bld: Cardinal;
+  required_rbld: Cardinal;
+  major: Cardinal;
+  minor: Cardinal;
+  bld: Cardinal;
+  rbld: Cardinal;
+  key: String;
+ begin
+  required_major := 14;
+  required_minor := 34;
+  required_bld := 31931;
+  required_rbld := 0;
+  Result := False;
+  key := 'SOFTWARE\Microsoft\VisualStudio\14.0\VC\Runtimes\X86';
+  if RegQueryDWordValue(HKLM32, key, 'Major', major) then begin
+    if RegQueryDWordValue(HKLM32, key, 'Minor', minor) then begin
+      if RegQueryDWordValue(HKLM32, key, 'Bld', bld) then begin
+        if RegQueryDWordValue(HKLM32, key, 'Rbld', rbld) then begin
+            Log('vcruntime (x86) version: ' + IntToStr(major) + '.' + IntToStr(minor) + '.' + IntToStr(bld) + '.' + IntToStr(rbld));
+            Result := (major > required_major) or ((major = required_major) and ((minor > required_minor) or ((minor = required_minor) and ((bld > required_bld) or ((bld = required_bld) and (rbld >= required_rbld))))))
+        end;
+      end;
+    end;
+  end;
+ end;
+function VCRuntime64Installed: Boolean;
+ var
+  required_major: Cardinal;
+  required_minor: Cardinal;
+  required_bld: Cardinal;
+  required_rbld: Cardinal;
+  major: Cardinal;
+  minor: Cardinal;
+  bld: Cardinal;
+  rbld: Cardinal;
+  key: String;
+ begin
+  required_major := 14;
+  required_minor := 34;
+  required_bld := 31931;
+  required_rbld := 0;
+  Result := False;
+  key := 'SOFTWARE\Microsoft\VisualStudio\14.0\VC\Runtimes\X64';
+  if RegQueryDWordValue(HKLM64, key, 'Major', major) then begin
+    if RegQueryDWordValue(HKLM64, key, 'Minor', minor) then begin
+      if RegQueryDWordValue(HKLM64, key, 'Bld', bld) then begin
+        if RegQueryDWordValue(HKLM64, key, 'Rbld', rbld) then begin
+            Log('vcruntime (x64) version: ' + IntToStr(major) + '.' + IntToStr(minor) + '.' + IntToStr(bld) + '.' + IntToStr(rbld));
+            Result := (major > required_major) or ((major = required_major) and ((minor > required_minor) or ((minor = required_minor) and ((bld > required_bld) or ((bld = required_bld) and (rbld >= required_rbld))))))
+        end;
+      end;
+    end;
+  end;
+ end;
 
