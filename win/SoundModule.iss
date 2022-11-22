@@ -93,8 +93,8 @@ Source: "..\README.txt"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\LICENSE.txt"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\win\release\soundmodule.exe"; DestDir: "{app}"; Flags: ignoreversion
 
-;; Manual, which should be got from the manual wiki using ..\scripts\mw2html_audacity\wiki2htm.bat
-;Source: "..\help\manual\*"; DestDir: "{app}\help\manual\"; Flags: ignoreversion recursesubdirs
+; Manual, which should be got from the manual wiki using ..\scripts\mw2html_audacity\wiki2htm.bat
+Source: "..\help\manual\*"; DestDir: "{app}\help\manual\"; Flags: ignoreversion recursesubdirs
 
 Source: "..\presets\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs
 

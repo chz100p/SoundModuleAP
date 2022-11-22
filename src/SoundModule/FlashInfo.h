@@ -36,8 +36,15 @@
 #define HEADER_START_ADDRESS                0
 #define HEADER_INFO_ADDRESS         (HEADER_COUNT_MAX * sizeof(FlashDataHeader))
 
+#define HEADER_EX_V2				2
+
+#define HEADER_COUNT_MAX_EX_V1		HEADER_COUNT_MAX
+
+#define HEADER_COUNT_MAX_EX_V2      65535
+
 #define SOUNDMODULE_RATE            46875
 #define SOUNDMODULE_HEADER_START_PAGE   0
+#define SOUNDMODULE_HEADER_COUNT_MAX HEADER_COUNT_MAX
 #define SOUNDMODULE_SAMPLE_START_PAGE   (SOUNDMODULE_HEADER_START_PAGE + HEADER_PAGE_NUM)
 #define SOUNDMODULE_SAMPLE_PAGE_NUM (FLASH_TOTAL_PAGE - SOUNDMODULE_SAMPLE_START_PAGE)
 #define SOUNDMODULE_SAMPLE_COUNT_MAX    (FLASH_PAGE_SIZE * SOUNDMODULE_SAMPLE_PAGE_NUM)
@@ -78,6 +85,13 @@ typedef struct
 {
 //--------
     BYTE                bHeaderCount;
+	BYTE				bEx;                            // 0xAB: v1, 0x02: v2
+	WORD				wHeaderCount;                   // v2
+	DWORD               dwReserved1;                    //—\–ñ.
+//-------- 8
+	DWORD               dwReserved2;                    //—\–ñ.
+	DWORD               dwReserved3;                    //—\–ñ.
+//-------- 16
 } FlashDataHeaderInfo;
 
 typedef struct
