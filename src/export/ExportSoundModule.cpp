@@ -490,6 +490,12 @@ int ExportSoundModule::Export(AudacityProject *project,
 						{
 							header->dwHeaderStartID = HEADER_ID_NOT_HEADER;
 						}
+						// adsemx開発向けの追加
+						// 新規プロトコルと衝突しないようにStartIDを書き換える
+						if ((header->dwHeaderStartID & 0xffffff00) == 0xBABEEF00)
+						{
+							header->dwHeaderStartID |= 0xBBBEEF00;
+						}
 					}
 
 				}

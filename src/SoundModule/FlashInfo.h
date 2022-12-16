@@ -29,6 +29,11 @@
 #define HEADER_ID_NOT_HEADER 0xBABABEEE
 #define HEADER_ID 0xBABABEEF   // 識別ID.
 #define HEADER_ID_2 0xBABBBEEF // 識別ID.
+
+#define HEADER_ID_FLASH_READ        0xBABEEF11            //識別ID.
+#define HEADER_ID_FLASH_WRITE       0xBABEEF12            //識別ID.
+#define HEADER_ID_FLASH_ERASE       0xBABEEF13            //識別ID.
+
 #define HEADER_PAGE_NUM 1
 #define HEADER_PAGE_SIZE (FLASH_PAGE_SIZE * HEADER_PAGE_NUM)
 #define HEADER_COUNT_MAX ((HEADER_PAGE_SIZE - sizeof(FlashDataHeaderInfo)) / sizeof(FlashDataHeader))
