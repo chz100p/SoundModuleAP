@@ -1,8 +1,8 @@
 /****************************************************************************/
 /*                                                                          */
-/*  ƒtƒ@ƒCƒ‹–¼  F FlashInfo.h                                              */
+/*  ãƒ•ã‚¡ã‚¤ãƒ«å  ï¼š FlashInfo.h                                              */
 /*                                                                          */
-/*  à–¾        F ƒtƒ‰ƒbƒVƒ…ƒƒ‚ƒŠî•ñ                                     */
+/*  èª¬æ˜        ï¼š ãƒ•ãƒ©ãƒƒã‚·ãƒ¥ãƒ¡ãƒ¢ãƒªæƒ…å ±                                     */
 /*                                                                          */
 /****************************************************************************/
 
@@ -10,113 +10,111 @@
 #define FLASHINFO_H
 
 /****************************************************************************/
-/*  ƒCƒ“ƒNƒ‹[ƒh                                                            */
+/*  ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰                                                            */
 /****************************************************************************/
 #include "Common.h"
 
-
 /****************************************************************************/
-/*  ƒfƒtƒ@ƒCƒ“                                                              */
+/*  ãƒ‡ãƒ•ã‚¡ã‚¤ãƒ³                                                              */
 /****************************************************************************/
-#define FLASH_PAGE_SIZE             256                 //(byte) Page Program.
-#define FLASH_PAGE_IN_SECTOR        256                 //Max of page num in sector.
-#define FLASH_SECTOR_MAX            64                  //Total sector num.
-#define FLASH_TOTAL_PAGE            16384               //Total Page num.
-#define FLASH_DATA_SIZE             (FLASH_TOTAL_PAGE * FLASH_PAGE_SIZE)
+#define FLASH_PAGE_SIZE 256      //(byte) Page Program.
+#define FLASH_PAGE_IN_SECTOR 256 // Max of page num in sector.
+#define FLASH_SECTOR_MAX 64      // Total sector num.
+#define FLASH_TOTAL_PAGE 16384   // Total Page num.
+#define FLASH_DATA_SIZE (FLASH_TOTAL_PAGE * FLASH_PAGE_SIZE)
 
-#define PLAY_BUFFER_SIZE            64                  //Ä¶—pƒoƒbƒtƒ@‚ÌƒTƒCƒY.
-#define PLAY_BUFFER_MAX             2                   //Ä¶—pƒoƒbƒtƒ@‚Ì”.
+#define PLAY_BUFFER_SIZE 64 // å†ç”Ÿç”¨ãƒãƒƒãƒ•ã‚¡ã®ã‚µã‚¤ã‚º.
+#define PLAY_BUFFER_MAX 2   // å†ç”Ÿç”¨ãƒãƒƒãƒ•ã‚¡ã®æ•°.
 
-#define HEADER_ID_NOT_HEADER        0xBABABEEE
-#define HEADER_ID                   0xBABABEEF          //¯•ÊID.
-#define HEADER_ID_2                 0xBABBBEEF          //¯•ÊID.
-#define HEADER_PAGE_NUM             1
-#define HEADER_PAGE_SIZE            (FLASH_PAGE_SIZE * HEADER_PAGE_NUM)
-#define HEADER_COUNT_MAX            ((HEADER_PAGE_SIZE - sizeof(FlashDataHeaderInfo)) / sizeof(FlashDataHeader))
-#define HEADER_START_ADDRESS                0
-#define HEADER_INFO_ADDRESS         (HEADER_COUNT_MAX * sizeof(FlashDataHeader))
+#define HEADER_ID_NOT_HEADER 0xBABABEEE
+#define HEADER_ID 0xBABABEEF   // è­˜åˆ¥ID.
+#define HEADER_ID_2 0xBABBBEEF // è­˜åˆ¥ID.
+#define HEADER_PAGE_NUM 1
+#define HEADER_PAGE_SIZE (FLASH_PAGE_SIZE * HEADER_PAGE_NUM)
+#define HEADER_COUNT_MAX ((HEADER_PAGE_SIZE - sizeof(FlashDataHeaderInfo)) / sizeof(FlashDataHeader))
+#define HEADER_START_ADDRESS 0
+#define HEADER_INFO_ADDRESS (HEADER_COUNT_MAX * sizeof(FlashDataHeader))
 
-#define HEADER_EX_V2				2
+#define HEADER_EX_V2 2
 
-#define HEADER_COUNT_MAX_EX_V1		HEADER_COUNT_MAX
+#define HEADER_COUNT_MAX_EX_V1 HEADER_COUNT_MAX
 
-#define HEADER_COUNT_MAX_EX_V2      65535
+#define HEADER_COUNT_MAX_EX_V2 65535
 
-#define SOUNDMODULE_RATE            46875
-#define SOUNDMODULE_HEADER_START_PAGE   0
+#define SOUNDMODULE_RATE 46875
+#define SOUNDMODULE_HEADER_START_PAGE 0
 #define SOUNDMODULE_HEADER_COUNT_MAX HEADER_COUNT_MAX
-#define SOUNDMODULE_SAMPLE_START_PAGE   (SOUNDMODULE_HEADER_START_PAGE + HEADER_PAGE_NUM)
+#define SOUNDMODULE_SAMPLE_START_PAGE (SOUNDMODULE_HEADER_START_PAGE + HEADER_PAGE_NUM)
 #define SOUNDMODULE_SAMPLE_PAGE_NUM (FLASH_TOTAL_PAGE - SOUNDMODULE_SAMPLE_START_PAGE)
-#define SOUNDMODULE_SAMPLE_COUNT_MAX    (FLASH_PAGE_SIZE * SOUNDMODULE_SAMPLE_PAGE_NUM)
-#define SOUNDMODULE_SAMPLE_START_ADDRESS        (FLASH_PAGE_SIZE * SOUNDMODULE_SAMPLE_START_PAGE)
+#define SOUNDMODULE_SAMPLE_COUNT_MAX (FLASH_PAGE_SIZE * SOUNDMODULE_SAMPLE_PAGE_NUM)
+#define SOUNDMODULE_SAMPLE_START_ADDRESS (FLASH_PAGE_SIZE * SOUNDMODULE_SAMPLE_START_PAGE)
 
 /****************************************************************************/
 /*  typedef                                                                 */
 /****************************************************************************/
-typedef DWORD                       FLASH_ADDRESS;
-
+typedef DWORD FLASH_ADDRESS;
 
 /****************************************************************************/
-/*  \‘¢‘Ì                                                                  */
+/*  æ§‹é€ ä½“                                                                  */
 /****************************************************************************/
-/* 64byteˆÈã‚É‚È‚Á‚Ä‚Í‚È‚ç‚È‚¢ */
+/* 64byteä»¥ä¸Šã«ãªã£ã¦ã¯ãªã‚‰ãªã„ */
 
 typedef struct
 {
-//--------
-    DWORD               dwHeaderStartID;                //ƒwƒbƒ_[ID.
-    BYTE                bHeaderSize;                    //‚±‚Ì\‘¢‘Ì‚ÌƒTƒCƒY.
-    BYTE                bReserved1[3];                  //—\–ñ.
-//-------- 8
-    DWORD               dwDataSize;                     //ƒf[ƒ^ƒTƒCƒY.
-    DWORD               dwDataTotalPage;                //ƒf[ƒ^‚Ì‘ƒy[ƒW”.
-//-------- 16
-    BYTE                bRestSize;                      //ÅŒã‚Ìƒy[ƒW‚Ìc‚èƒoƒCƒg”.
-    
-    BYTE                bStartSector;                   //Å‰‚ÌƒZƒNƒ^[.
-    BYTE                bStartPage;                     //bStartSector‚ÌÅ‰‚Ìƒy[ƒW.
-    BYTE                bStartByte;                     //bStartPage‚ÌÅ‰‚ÌƒoƒCƒg.
-    
-    DWORD               dwHeaderEndID;                  //ƒwƒbƒ_[ID.
-//-------- 24
+    //--------
+    DWORD dwHeaderStartID; // ãƒ˜ãƒƒãƒ€ãƒ¼ID.
+    BYTE bHeaderSize;      // ã“ã®æ§‹é€ ä½“ã®ã‚µã‚¤ã‚º.
+    BYTE bReserved1[3];    // äºˆç´„.
+    //-------- 8
+    DWORD dwDataSize;      // ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º.
+    DWORD dwDataTotalPage; // ãƒ‡ãƒ¼ã‚¿ã®ç·ãƒšãƒ¼ã‚¸æ•°.
+    //-------- 16
+    BYTE bRestSize; // æœ€å¾Œã®ãƒšãƒ¼ã‚¸ã®æ®‹ã‚Šãƒã‚¤ãƒˆæ•°.
+
+    BYTE bStartSector; // æœ€åˆã®ã‚»ã‚¯ã‚¿ãƒ¼.
+    BYTE bStartPage;   // bStartSectorã®æœ€åˆã®ãƒšãƒ¼ã‚¸.
+    BYTE bStartByte;   // bStartPageã®æœ€åˆã®ãƒã‚¤ãƒˆ.
+
+    DWORD dwHeaderEndID; // ãƒ˜ãƒƒãƒ€ãƒ¼ID.
+    //-------- 24
 } FlashDataHeader;
 
 typedef struct
 {
-//--------
-    BYTE                bHeaderCount;
-	BYTE				bEx;                            // 0xAB: v1, 0x02: v2
-	WORD				wHeaderCount;                   // v2
-	DWORD               dwReserved1;                    //—\–ñ.
-//-------- 8
-	DWORD               dwReserved2;                    //—\–ñ.
-	DWORD               dwReserved3;                    //—\–ñ.
-//-------- 16
+    //--------
+    BYTE bHeaderCount;
+    BYTE bEx;          // 0xAB: v1, 0x02: v2
+    WORD wHeaderCount; // v2
+    DWORD dwReserved1; // äºˆç´„.
+    //-------- 8
+    DWORD dwReserved2; // äºˆç´„.
+    DWORD dwReserved3; // äºˆç´„.
+    //-------- 16
 } FlashDataHeaderInfo;
 
 typedef struct
 {
-//--------
-    BYTE                bPlayStatus;                    //ƒXƒe[ƒ^ƒX.
-    
-    BYTE                bPlayBufferNo;                  //Ä¶’†‚Ìƒoƒbƒtƒ@No.
-    BYTE                bReadBufferNo;                  //“Ç‚İ‚İ‚Ìƒoƒbƒtƒ@No.
-    BYTE                bReadFlag;                      //‚±‚Ìƒtƒ‰ƒO‚ª—§‚Â‚ÆŸ‚Ìƒf[ƒ^‚ğ“Ç‚İ‚Ş.
-//-------- 8
-    BYTE                bCurrentSector;                 //Œ»İ‚ÌƒZƒNƒ^[.
-    BYTE                bCurrentPage;                   //wCurrentSector‚ÌŒ»İ‚Ìƒy[ƒW.
-    BYTE                bCurrentPos;                    //Œ»İ‚Ìƒf[ƒ^ˆÊ’u.
-    
-    BYTE                bReadSector;                    //€”õŸ‚İ‚ÌƒZƒNƒ^[(Ÿ‚ÌƒZƒNƒ^[).
-    BYTE                bReadPage;                      //wReadSector‚ÌŒ»İ‚Ìƒy[ƒW.
-    BYTE                bReadCount;                     //ƒoƒbƒtƒ@‚Ì•ªŠ„“Ç‚İ‚İ‚ÌƒJƒEƒ“ƒg.
-    
-    BYTE                bReserved1;                     //—\–ñ.
-//-------- 16
-    DWORD               dwPageCount;                    //“Ç‚İ‚ñ‚¾ƒy[ƒW‡Œv.
-    
-    BYTE                bReserved2[4];                  //—\–ñ.
-//-------- 24
+    //--------
+    BYTE bPlayStatus; // ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹.
+
+    BYTE bPlayBufferNo; // å†ç”Ÿä¸­ã®ãƒãƒƒãƒ•ã‚¡No.
+    BYTE bReadBufferNo; // èª­ã¿è¾¼ã¿ã®ãƒãƒƒãƒ•ã‚¡No.
+    BYTE bReadFlag;     // ã“ã®ãƒ•ãƒ©ã‚°ãŒç«‹ã¤ã¨æ¬¡ã®ãƒ‡ãƒ¼ã‚¿ã‚’èª­ã¿è¾¼ã‚€.
+    //-------- 8
+    BYTE bCurrentSector; // ç¾åœ¨ã®ã‚»ã‚¯ã‚¿ãƒ¼.
+    BYTE bCurrentPage;   // wCurrentSectorã®ç¾åœ¨ã®ãƒšãƒ¼ã‚¸.
+    BYTE bCurrentPos;    // ç¾åœ¨ã®ãƒ‡ãƒ¼ã‚¿ä½ç½®.
+
+    BYTE bReadSector; // æº–å‚™æ¾„ã¿ã®ã‚»ã‚¯ã‚¿ãƒ¼(æ¬¡ã®ã‚»ã‚¯ã‚¿ãƒ¼).
+    BYTE bReadPage;   // wReadSectorã®ç¾åœ¨ã®ãƒšãƒ¼ã‚¸.
+    BYTE bReadCount;  // ãƒãƒƒãƒ•ã‚¡ã®åˆ†å‰²èª­ã¿è¾¼ã¿ã®ã‚«ã‚¦ãƒ³ãƒˆ.
+
+    BYTE bReserved1; // äºˆç´„.
+    //-------- 16
+    DWORD dwPageCount; // èª­ã¿è¾¼ã‚“ã ãƒšãƒ¼ã‚¸åˆè¨ˆ.
+
+    BYTE bReserved2[4]; // äºˆç´„.
+    //-------- 24
 } PlayInfo;
 
-#endif //FLASHINFO_H
+#endif // FLASHINFO_H
