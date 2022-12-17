@@ -245,7 +245,8 @@ BOOL USBManager::OpenUSB()
 #endif
 //              if( (stHidAttributes.wVendorID == DRV_VENDER_ID) && (stHidAttributes.wProductID == DRV_PRODUCT_ID) && (iIndexNo == 1) )
 //              if( (stHidAttributes.wVendorID == DRV_VENDER_ID) && (stHidAttributes.wProductID == DRV_PRODUCT_ID) )
-                if ((stHidAttributes.wVendorID == 0x22EA) && (stHidAttributes.wProductID == 0x0041))
+                if ((stHidAttributes.wVendorID == 0x22EA) &&
+                    ((stHidAttributes.wProductID == 0x0041) || (stHidAttributes.wProductID == 0x0079)))
                 {
 #if D_LOG08
                     OutputDebugStringA( "Find Target !!!\n" );
