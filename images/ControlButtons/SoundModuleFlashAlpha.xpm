@@ -1,0 +1,34 @@
+/* XPM */
+static char *SoundModuleFlashAlpha[] = {
+/* columns rows colors chars-per-pixel */
+"16 16 12 1 ",
+"  c black",
+". c #101010",
+"X c #202020",
+"o c gray25",
+"O c #606060",
+"+ c #808080",
+"@ c #9F9F9F",
+"# c gray75",
+"$ c gray81",
+"% c #DFDFDF",
+"& c #EFEFEF",
+"* c white",
+/* pixels */
+"                ",
+"     X&**&X     ",
+"     o****o     ",
+"     o****o     ",
+"     o****o     ",
+"     o****o     ",
+"     o****o     ",
+"   X+@****@+X   ",
+"    $******$    ",
+"    .$****$.    ",
+"++O  .$**$.  O++",
+"**#   X&&X   #**",
+"**#    XX    #**",
+"**%++++++++++%**",
+"****************",
+"****************"
+};

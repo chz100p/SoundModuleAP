@@ -97,7 +97,7 @@ void SoundModuleToolBar::Populate()
 {
    MakeButtonBackgroundsLarge();
 
-   mPlay = MakeButton( bmpSoundModule, bmpSoundModule, bmpSoundModuleDisabled,
+   mPlay = MakeButton( bmpSoundModuleFlash, bmpSoundModuleFlash, bmpSoundModuleFlashDisabled,
       ID_SOUNDMODULE_BUTTON, true, _("SoundModule"));
 
 #if wxUSE_TOOLTIPS
