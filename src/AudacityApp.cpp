@@ -199,7 +199,7 @@ It handles initialization and termination by subclassing wxApp.
 
 #endif //(__WXMSW__)
 
-#include "../images/SoundModuleLogoWithName.xpm"
+#include "../images/AudacityLogoWithName.xpm"
 
 ////////////////////////////////////////////////////////////
 /// Custom events
@@ -1269,7 +1269,7 @@ void AudacityApp::FinishInits()
 // with showing a dialog AND a splash screen during inits.
 #if !wxCHECK_VERSION(3, 0, 0)
    // BG: Create a temporary window to set as the top window
-   wxImage logoimage((const char **) SoundModuleLogoWithName_xpm);
+   wxImage logoimage((const char **) AudacityLogoWithName_xpm);
    logoimage.Rescale(logoimage.GetWidth() / 2, logoimage.GetHeight() / 2);
    wxBitmap logo(logoimage);
 

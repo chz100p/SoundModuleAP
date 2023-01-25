@@ -47,7 +47,6 @@ WX_DEFINE_LIST(AboutDialogCreditItemsList);
 #include "Theme.h"
 #include "AllThemeResources.h"
 
-#include "../images/SoundModuleLogoWithName.xpm"
 #include "../images/AudacityLogoWithName.xpm"
 
 void AboutDialog::CreateCreditsList()
@@ -242,8 +241,8 @@ void AboutDialog::PopulateSoundModulePage( ShuttleGui & S )
    S.StartNotebookPage( wxT("SoundModule") );
    S.StartVerticalLay(1);
 
-   //v For now, change to SoundModuleLogoWithName via old-fashioned way, not Theme.
-   logo = new wxBitmap((const char **) SoundModuleLogoWithName_xpm); //v
+   //v For now, change to AudacityLogoWithName via old-fashioned way, not Theme.
+   logo = new wxBitmap((const char **) AudacityLogoWithName_xpm); //v
 
    // JKC: Resize to 50% of size.  Later we may use a smaller xpm as
    // our source, but this allows us to tweak the size - if we want to.
@@ -257,8 +256,8 @@ void AboutDialog::PopulateSoundModulePage( ShuttleGui & S )
    icon =
        new wxStaticBitmap(S.GetParent(), -1,
                           //*logo, //v
-                          //v theTheme.Bitmap(bmpSoundModuleLogo), wxPoint(93, 10), wxSize(215, 190));
-                          //v theTheme.Bitmap(bmpSoundModuleLogoWithName),
+                          //v theTheme.Bitmap(bmpAudacityLogo), wxPoint(93, 10), wxSize(215, 190));
+                          //v theTheme.Bitmap(bmpAudacityLogoWithName),
                           RescaledBitmap,
                           wxDefaultPosition,
                           wxSize(int(LOGOWITHNAME_WIDTH*fScale), int(LOGOWITHNAME_HEIGHT*fScale)));
