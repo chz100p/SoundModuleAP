@@ -158,7 +158,7 @@ wxString TitleText( const wxString & Key )
    if(Key ==wxT("save") )
    {
       /* i18n-hint: Title for a topic.*/
-      return _("Saving an SoundModule Project");
+      return _("Saving an OrenoKoukaon Project");
    }
    if(Key ==wxT("wma-proprietary") )
    {
@@ -187,7 +187,7 @@ static wxString HelpTextBuiltIn( const wxString & Key )
       return WrapText(
          wxString(wxT("")) +
          _("<center><h3>How to Get Help</h3></center>") +
-         _("Welcome to SoundModule ") + AUDACITY_VERSION_STRING + wxT("!<p>") +
+         _("Welcome to OrenoKoukaon ") + AUDACITY_VERSION_STRING + wxT("!<p>") +
          _("These are our support methods:") + wxT("</p>") + wxT("<ul><li>") +
          _(" [[file:quick_help.html|Quick Help]] (should be installed locally, <a href=\"http://manual.audacityteam.org/o/quick_help.html\">Internet version if it isn't</a>)") + wxT("</li><li>") +
          _(" [[file:index.html|Manual]] (should be installed locally, <a href=\"http://manual.audacityteam.org/o/\">Internet version if it isn't</a>)") + wxT("</li><li>") +
@@ -200,7 +200,7 @@ static wxString HelpTextBuiltIn( const wxString & Key )
    {
       return WrapText(
          wxString(wxT("<p>"))+
-         _("SoundModule can import unprotected files in many other formats (such as M4A and WMA, \
+         _("OrenoKoukaon can import unprotected files in many other formats (such as M4A and WMA, \
 compressed WAV files from portable recorders and audio from video files) if you download and install \
 the optional <a href=\"http://manual.audacityteam.org/o/man/faq_opening_and_saving_files.html#foreign\"> \
 FFmpeg library</a> to your computer.") + wxT("</p><p>") +

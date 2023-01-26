@@ -1,5 +1,5 @@
 
-SoundModule: 
+OrenoKoukaon: 
   WWW: http://bit-trade-one.co.jp/
 
 Version 2.1.0 
@@ -18,16 +18,16 @@ our web site at:
 
   http://bit-trade-one.co.jp/
 
-SoundModule is built upon other free libraries; some of these libraries may have
-come with SoundModule in the lib-src directory.  Others you are expected to install
-first if you want SoundModule to have certain capabilities.  Most of these libraries
+OrenoKoukaon is built upon other free libraries; some of these libraries may have
+come with OrenoKoukaon in the lib-src directory.  Others you are expected to install
+first if you want OrenoKoukaon to have certain capabilities.  Most of these libraries
 are not distributed under the terms of the GPL, but rather some other free,
 GPL-compatible license.  Specifically:
 
   Audacity: GPL
 
   expat: BSD-like license.
-    Provides XML parsing.  Included with SoundModule.
+    Provides XML parsing.  Included with OrenoKoukaon.
 
   FFmpeg: GPL or LGPL (according to how you obtain/configure it)
     Provides decoding/encoding of additional formats. Optional separate
@@ -46,21 +46,21 @@ GPL-compatible license.  Specifically:
 
   libnyquist: BSD-like license.
     Functional language for manipulating audio; available
-    within SoundModule for effects processing.
+    within OrenoKoukaon for effects processing.
 
   libogg: BSD-like license.
     Optional separate download, along with libvorbis.
 
   libsndfile: LGPL
     Reads and writes uncompressed PCM audio files.
-    Included with SoundModule.
+    Included with OrenoKoukaon.
 
   libsoxr: LGPL
     The SoX Resampler library performs one-dimensional sample-rate conversion.
 
   libvamp: new-style BSD
     Plug-in interface and support library for audio analysis plug-ins.
-    Included with SoundModule.
+    Included with OrenoKoukaon.
 
   libvorbis: BSD-like license.
     Decodes and encodes Ogg Vorbis files.  Optional
@@ -70,10 +70,10 @@ GPL-compatible license.  Specifically:
     sord and sratom libraries to support LV2 plug-ins. 
 
   portsmf: BSD-like license.
-    library for reading and writing midi files. Included with SoundModule
+    library for reading and writing midi files. Included with OrenoKoukaon
 
   sbsms: GPL v2
-    Pitch and tempo changing library. Included in SoundModule
+    Pitch and tempo changing library. Included in OrenoKoukaon
 
   SoundTouch: LGPL
     Changes tempo without changing pitch and vice versa.

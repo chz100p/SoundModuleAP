@@ -53,7 +53,7 @@ END_EVENT_TABLE()
 
 //Standard constructor
 SoundModuleToolBar::SoundModuleToolBar()
-: ToolBar(SoundModuleBarID, _("SoundModule"), wxT("SoundModule"))
+: ToolBar(SoundModuleBarID, _("OrenoKoukaon!!"), wxT("SoundModule"))
 {
    mPaused = false;
 
@@ -98,7 +98,7 @@ void SoundModuleToolBar::Populate()
    MakeButtonBackgroundsLarge();
 
    mPlay = MakeButton( bmpSoundModuleFlash, bmpSoundModuleFlash, bmpSoundModuleFlashDisabled,
-      ID_SOUNDMODULE_BUTTON, true, _("SoundModule"));
+      ID_SOUNDMODULE_BUTTON, true, _("OrenoKoukaon!!"));
 
 #if wxUSE_TOOLTIPS
    RegenerateToolsTooltips();

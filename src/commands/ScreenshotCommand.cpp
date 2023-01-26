@@ -432,7 +432,7 @@ bool ScreenshotCommand::Apply(CommandExecutionContext context)
    {
       CaptureToolbar(context.proj->mToolManager, TransportBarID, fileName);
    }
-   else if (captureMode.IsSameAs(wxT("soundmodule")))
+   else if (captureMode.IsSameAs(wxT("orenokoukaon")))
    {
       CaptureToolbar(context.proj->mToolManager, SoundModuleBarID, fileName);
    }

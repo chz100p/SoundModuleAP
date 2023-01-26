@@ -735,7 +735,7 @@ END_EVENT_TABLE()
 AudacityProject::AudacityProject(wxWindow * parent, wxWindowID id,
                                  const wxPoint & pos,
                                  const wxSize & size)
-   : wxFrame(parent, id, wxT("SoundModule"), pos, size),
+   : wxFrame(parent, id, wxT("OrenoKoukaon"), pos, size),
      mRegionSave(),
      mLastPlayMode(normalPlay),
      mRate((double) gPrefs->Read(wxT("/SamplingRate/DefaultProjectSampleRate"), AudioIO::GetOptimalSupportedSampleRate())),
@@ -1016,7 +1016,7 @@ AudacityProject::AudacityProject(wxWindow * parent, wxWindowID id,
 
    mTrackFactory = new TrackFactory(mDirManager);
 
-   wxString msg = wxString::Format(_("Welcome to SoundModule version %s"),
+   wxString msg = wxString::Format(_("Welcome to OrenoKoukaon version %s"),
                                    AUDACITY_VERSION_STRING);
    mStatusBar->SetStatusText(msg);
    mLastStatusUpdateTime = ::wxGetUTCTime();
@@ -1183,7 +1183,7 @@ void AudacityProject::SetProjectTitle()
    wxString name = GetName();
    if( name.IsEmpty() )
    {
-      name = wxT("SoundModule");
+      name = wxT("OrenoKoukaon");
    }
 
    if (mIsRecovered)
@@ -2352,7 +2352,7 @@ void AudacityProject::OpenFiles(AudacityProject *proj)
     * and save dialogues, for the option that only shows project files created
     * with Audacity. Do not include pipe symbols or .aup (this extension will
     * now be added automatically for the Save Projects dialogues).*/
-   wxArrayString selectedFiles = ShowOpenDialog(_("SoundModule projects"), wxT("*.sdm"));
+   wxArrayString selectedFiles = ShowOpenDialog(_("OrenoKoukaon projects"), wxT("*.sdm"));
    if (selectedFiles.GetCount() == 0) {
       gPrefs->Write(wxT("/LastOpenType"),wxT(""));
       gPrefs->Flush();
@@ -2405,10 +2405,10 @@ void AudacityProject::OpenFiles(AudacityProject *proj)
 // Most of this string was duplicated 3 places. Made the warning consistent in this global.
 // The %s is to be filled with the version string.
 static wxString gsLegacyFileWarning =
-_("This file was saved by SoundModule version %s. The format has changed. \
-\n\nSoundModule can try to open and save this file, but saving it in this \
+_("This file was saved by OrenoKoukaon version %s. The format has changed. \
+\n\nOrenoKoukaon can try to open and save this file, but saving it in this \
 \nversion will then prevent any 1.2 or earlier version opening it. \
-\n\nSoundModule might corrupt the file in opening it, so you should \
+\n\nOrenoKoukaon might corrupt the file in opening it, so you should \
 back it up first. \
 \n\nOpen this file now?");
 
@@ -2454,7 +2454,7 @@ void AudacityProject::OpenFile(wxString fileName, bool addtohistory)
    if (fileName.Lower().EndsWith(wxT(".sdm.bak")))
    {
       wxMessageBox(
-         _("You are trying to open an automatically created backup file.\nDoing this may result in severe data loss.\n\nPlease open the actual SoundModule project file instead."),
+         _("You are trying to open an automatically created backup file.\nDoing this may result in severe data loss.\n\nPlease open the actual OrenoKoukaon project file instead."),
          _("Warning - Backup File Detected"),
          wxOK | wxCENTRE, this);
       return;
@@ -2504,7 +2504,7 @@ void AudacityProject::OpenFile(wxString fileName, bool addtohistory)
       // Convert to the new format.
       bool success = ConvertLegacyProjectFile(wxFileName(fileName));
       if (!success) {
-         wxMessageBox(_("SoundModule was unable to convert an SoundModule 1.0 project to the new project format."),
+         wxMessageBox(_("OrenoKoukaon was unable to convert an OrenoKoukaon 1.0 project to the new project format."),
                       _("Error Opening Project"),
                       wxOK | wxCENTRE, this);
          return;
@@ -2966,7 +2966,7 @@ bool AudacityProject::HandleXMLTag(const wxChar *tag, const wxChar **attrs)
    {
       wxString msg;
       /* i18n-hint: %s will be replaced by the version number.*/
-      msg.Printf(_("This file was saved using SoundModule %s.\nYou are using SoundModule %s. You may need to upgrade to a newer version to open this file."),
+      msg.Printf(_("This file was saved using OrenoKoukaon %s.\nYou are using OrenoKoukaon %s. You may need to upgrade to a newer version to open this file."),
                  audacityVersion.c_str(),
                  AUDACITY_VERSION_STRING);
       wxMessageBox(msg,
@@ -3703,7 +3703,7 @@ bool AudacityProject::SaveAs(bool bWantSaveCompressed /*= false*/)
    {
       if (ShowWarningDialog(this, wxT("FirstProjectSave"),
                            _("\
-'Save Compressed Project' is for an SoundModule project, not an audio file.\n\
+'Save Compressed Project' is for an OrenoKoukaon project, not an audio file.\n\
 For an audio file that will open in other apps, use 'Export'.\n\n\
 \
 Compressed project files are a good way to transmit your project online, \n\
@@ -3719,7 +3719,7 @@ each compressed track.\n"),
    {
       if (ShowWarningDialog(this, wxT("FirstProjectSave"),
                            _("\
-'Save Project' is for an SoundModule project, not an audio file.\n\
+'Save Project' is for an OrenoKoukaon project, not an audio file.\n\
 For an audio file that will open in other apps, use 'Export'.\n"),
                            true) != wxID_OK)
          return false;
@@ -3729,7 +3729,7 @@ For an audio file that will open in other apps, use 'Export'.\n"),
    fName = FileSelector(
       sDialogTitle,
       path, fName, wxT(""),
-      _("SoundModule projects") + static_cast<wxString>(wxT(" (*.sdm)|*.sdm")),
+      _("OrenoKoukaon projects") + static_cast<wxString>(wxT(" (*.sdm)|*.sdm")),
       // JKC: I removed 'wxFD_OVERWRITE_PROMPT' because we are checking
       // for overwrite ourselves later, and we disallow it.
       // We disallow overwrite because we would have to delete the many

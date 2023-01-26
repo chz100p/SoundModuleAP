@@ -33,7 +33,7 @@
 
 /****************************************************************************/
 /*                                                                          */
-/*  ƒNƒ‰ƒX–¼F  ƒƒCƒ“ƒNƒ‰ƒX                                                */
+/*  ï¿½Nï¿½ï¿½ï¿½Xï¿½ï¿½ï¿½F  ï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½Nï¿½ï¿½ï¿½X                                                */
 /*                                                                          */
 /****************************************************************************/
 class PipoApp
@@ -79,7 +79,7 @@ END_EVENT_TABLE()
 ///
 ExportSoundModuleOptions::ExportSoundModuleOptions(wxWindow *parent)
 :  wxDialog(parent, wxID_ANY,
-            wxString(_("Specify SoundModule Options")))
+            wxString(_("Specify OrenoKoukaon Options")))
 {
    ShuttleGui S(this, eIsCreatingFromPrefs);
 
@@ -92,7 +92,7 @@ void ExportSoundModuleOptions::PopulateOrExchange(ShuttleGui & S)
 {
    S.StartHorizontalLay(wxEXPAND, 0);
    {
-      S.StartStatic(_("SoundModule Export Setup"), true);
+      S.StartStatic(_("OrenoKoukaon Export Setup"), true);
 	  {
 		  // SetRate
 		  S.AddVariableText(_("SetRate"));
@@ -182,7 +182,7 @@ ExportSoundModule::ExportSoundModule()
    AddExtension(wxT(""),0);
    SetMaxChannels(255,0);
    SetCanMetaData(false,0);
-   SetDescription(_("(SoundModule)"),0);
+   SetDescription(_("(OrenoKoukaon)"),0);
 }
 
 void ExportSoundModule::Destroy()
@@ -473,8 +473,8 @@ int ExportSoundModule::Export(AudacityProject *project,
 				}
 				if (updateResult == eProgressSuccess)
 				{
-					// HEADER_ID‚ÍÅ‰‚ÌUSBƒuƒƒbƒN‚¾‚¯
-					// ‚à‚µÅ‰ˆÈŠO‚ÌƒuƒƒbƒN‚ÉHEADER_ID‚ª‚ ‚Á‚½‚çƒf[ƒ^‚ð•ÒW‚·‚é
+					// HEADER_IDï¿½ÍÅï¿½ï¿½ï¿½USBï¿½uï¿½ï¿½ï¿½bï¿½Nï¿½ï¿½ï¿½ï¿½
+					// ï¿½ï¿½ï¿½ï¿½ï¿½Åï¿½ï¿½ÈŠOï¿½Ìƒuï¿½ï¿½ï¿½bï¿½Nï¿½ï¿½HEADER_IDï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½fï¿½[ï¿½^ï¿½ï¿½ÒWï¿½ï¿½ï¿½ï¿½
 					DWORD dwRoop = (DWORD)(pipo.dwDataSize / USB_BUFFER_SIZE);
 					if ((pipo.dwDataSize % USB_BUFFER_SIZE) != 0)
 					{
@@ -490,8 +490,8 @@ int ExportSoundModule::Export(AudacityProject *project,
 						{
 							header->dwHeaderStartID = HEADER_ID_NOT_HEADER;
 						}
-						// adsemxŠJ”­Œü‚¯‚Ì’Ç‰Á
-						// V‹KƒvƒƒgƒRƒ‹‚ÆÕ“Ë‚µ‚È‚¢‚æ‚¤‚ÉStartID‚ð‘‚«Š·‚¦‚é
+						// adsemxï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì’Ç‰ï¿½
+						// ï¿½Vï¿½Kï¿½vï¿½ï¿½ï¿½gï¿½Rï¿½ï¿½ï¿½ÆÕ“Ë‚ï¿½ï¿½È‚ï¿½ï¿½æ‚¤ï¿½ï¿½StartIDï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 						if ((header->dwHeaderStartID & 0xffffff00) == 0xBABEEF00)
 						{
 							header->dwHeaderStartID |= 0xBBBEEF00;
@@ -561,9 +561,9 @@ ExportPlugin *New_ExportSoundModule()
 
 /****************************************************************************/
 /*                                                                          */
-/*  ŠÖ”–¼  F  PipoApp                                                         */
+/*  ï¿½Öï¿½ï¿½ï¿½  ï¿½F  PipoApp                                                         */
 /*                                                                          */
-/*  à–¾    F  ƒRƒ“ƒXƒgƒ‰ƒNƒ^                                              */
+/*  ï¿½ï¿½ï¿½ï¿½    ï¿½F  ï¿½Rï¿½ï¿½ï¿½Xï¿½gï¿½ï¿½ï¿½Nï¿½^                                              */
 /*                                                                          */
 /****************************************************************************/
 PipoApp::PipoApp(): dwDataSize(0)
@@ -577,9 +577,9 @@ PipoApp::PipoApp(): dwDataSize(0)
 
 /****************************************************************************/
 /*                                                                          */
-/*  ŠÖ”–¼  F  ~PipoApp                                                    */
+/*  ï¿½Öï¿½ï¿½ï¿½  ï¿½F  ~PipoApp                                                    */
 /*                                                                          */
-/*  à–¾    F  ƒfƒXƒgƒ‰ƒNƒ^                                                */
+/*  ï¿½ï¿½ï¿½ï¿½    ï¿½F  ï¿½fï¿½Xï¿½gï¿½ï¿½ï¿½Nï¿½^                                                */
 /*                                                                          */
 /****************************************************************************/
 PipoApp::~PipoApp()
@@ -603,7 +603,7 @@ int PipoApp::WriteData(ProgressDialog *progress)
         goto END;
     }
     
-    //ƒf[ƒ^‚Ì‘‚«ž‚Ý ------------------------------------------------------->
+    //ï¿½fï¿½[ï¿½^ï¿½Ìï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ------------------------------------------------------->
     dwRoop = (DWORD)(dataSize / USB_BUFFER_SIZE);
     if( (dataSize % USB_BUFFER_SIZE) != 0 )
     {

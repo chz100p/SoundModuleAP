@@ -574,7 +574,7 @@ static wxArrayString ofqueue;
 // of Audacity.
 //
 
-#define IPC_APPL wxT("soundmodule")
+#define IPC_APPL wxT("orenokoukaon")
 #define IPC_TOPIC wxT("System")
 
 class IPCConn : public wxConnection
@@ -1050,8 +1050,8 @@ bool AudacityApp::OnInit()
    wxString appName = wxT(AUDACITY_NAME);
    wxString vendorName = wxT(AUDACITY_NAME);
 #else
-   wxString vendorName = wxT("SoundModule");
-   wxString appName = wxT("SoundModule");
+   wxString vendorName = wxT("OrenoKoukaon");
+   wxString appName = wxT("OrenoKoukaon");
 #endif
 
    wxTheApp->SetVendorName(vendorName);
@@ -1097,9 +1097,9 @@ bool AudacityApp::OnInit()
       * The "share" and "share/doc" directories in their install path */
    #ifdef __WXGTK__
    /* On Unix systems, the default temp dir is in /var/tmp. */
-   defaultTempDir.Printf(wxT("/var/tmp/soundmodule-%s"), wxGetUserId().c_str());
+   defaultTempDir.Printf(wxT("/var/tmp/orenokoukaon-%s"), wxGetUserId().c_str());
 
-   wxString pathVar = wxGetenv(wxT("SOUNDMODULE_PATH"));
+   wxString pathVar = wxGetenv(wxT("ORENOKOUKAON_PATH"));
    if (pathVar != wxT(""))
       AddMultiPathsToPathList(pathVar, audacityPathList);
    AddUniquePathToPathList(::wxGetCwd(), audacityPathList);
@@ -1114,13 +1114,13 @@ bool AudacityApp::OnInit()
                                                wxT(INSTALL_PREFIX), wxT(AUDACITY_NAME)),
                               audacityPathList);
    #else //AUDACITY_NAME
-     AddUniquePathToPathList(wxString::Format(wxT("%s/.soundmodule-files"),
+     AddUniquePathToPathList(wxString::Format(wxT("%s/.orenokoukaon-files"),
                                               home.c_str()),
                               audacityPathList);
-    AddUniquePathToPathList(wxString::Format(wxT("%s/share/soundmodule"),
+    AddUniquePathToPathList(wxString::Format(wxT("%s/share/orenokoukaon"),
                                                wxT(INSTALL_PREFIX)),
                               audacityPathList);
-      AddUniquePathToPathList(wxString::Format(wxT("%s/share/doc/soundmodule"),
+      AddUniquePathToPathList(wxString::Format(wxT("%s/share/doc/orenokoukaon"),
                                                wxT(INSTALL_PREFIX)),
                               audacityPathList);
    #endif //AUDACITY_NAME
@@ -1146,7 +1146,7 @@ bool AudacityApp::OnInit()
    AddUniquePathToPathList(progPath, audacityPathList);
    AddUniquePathToPathList(progPath+wxT("\\Languages"), audacityPathList);
 
-   defaultTempDir.Printf(wxT("%s\\soundmodule_temp"),
+   defaultTempDir.Printf(wxT("%s\\orenokoukaon_temp"),
                          tmpDirLoc.c_str());
    #endif //__WXWSW__
 
@@ -1163,7 +1163,7 @@ bool AudacityApp::OnInit()
    AddUniquePathToPathList(progPath+wxT("/../"), audacityPathList);
    AddUniquePathToPathList(progPath+wxT("/../Resources"), audacityPathList);
 
-   defaultTempDir.Printf(wxT("%s/soundmodule-%s"),
+   defaultTempDir.Printf(wxT("%s/orenokoukaon-%s"),
                          tmpDirLoc.c_str(),
                          wxGetUserId().c_str());
    #endif //__WXMAC__
@@ -1247,7 +1247,7 @@ void AudacityApp::FinishInits()
    {
       delete parser;
 
-      wxFprintf(stderr, wxT("SoundModule v%s\n"), AUDACITY_VERSION_STRING);
+      wxFprintf(stderr, wxT("OrenoKoukaon v%s\n"), AUDACITY_VERSION_STRING);
       exit(0);
    }
 
@@ -1282,7 +1282,7 @@ void AudacityApp::FinishInits()
                          wxDefaultPosition,
                          wxDefaultSize,
                          wxSTAY_ON_TOP);
-   temporarywindow->SetTitle(_("SoundModule is starting up..."));
+   temporarywindow->SetTitle(_("OrenoKoukaon is starting up..."));
    SetTopWindow(temporarywindow);
 #endif
 
@@ -1305,7 +1305,7 @@ void AudacityApp::FinishInits()
    fileMenu->Append(wxID_NEW, wxString(_("&New")) + wxT("\tCtrl+N"));
    fileMenu->Append(wxID_OPEN, wxString(_("&Open...")) + wxT("\tCtrl+O"));
    fileMenu->AppendSubMenu(recentMenu, _("Open &Recent..."));
-   fileMenu->Append(wxID_ABOUT, _("&About SoundModule..."));
+   fileMenu->Append(wxID_ABOUT, _("&About OrenoKoukaon..."));
    fileMenu->Append(wxID_PREFERENCES, wxString(_("&Preferences...")) + wxT("\tCtrl+,"));
 
    wxMenuBar *menuBar = new wxMenuBar();
@@ -1473,13 +1473,13 @@ bool AudacityApp::InitTempDir()
 
    if (temp == wxT("")) {
       // Failed
-      wxMessageBox(_("SoundModule could not find a place to store temporary files.\nPlease enter an appropriate directory in the preferences dialog."));
+      wxMessageBox(_("OrenoKoukaon could not find a place to store temporary files.\nPlease enter an appropriate directory in the preferences dialog."));
 
       PrefsDialog dialog(NULL);
       dialog.ShowTempDirPage();
       dialog.ShowModal();
 
-      wxMessageBox(_("SoundModule is now going to exit. Please launch SoundModule again to use the new temporary directory."));
+      wxMessageBox(_("OrenoKoukaon is now going to exit. Please launch OrenoKoukaon again to use the new temporary directory."));
       return false;
    }
 
@@ -1506,23 +1506,23 @@ bool AudacityApp::InitTempDir()
 
 bool AudacityApp::CreateSingleInstanceChecker(wxString dir)
 {
-   wxString name = wxString::Format(wxT("soundmodule-lock-%s"), wxGetUserId().c_str());
+   wxString name = wxString::Format(wxT("orenokoukaon-lock-%s"), wxGetUserId().c_str());
    mChecker = new wxSingleInstanceChecker();
 
 #if defined(__UNIX__)
-   wxString sockFile(FileNames::DataDir() + wxT("/.soundmodule.sock"));
+   wxString sockFile(FileNames::DataDir() + wxT("/.orenokoukaon.sock"));
 #endif
 
-   wxString runningTwoCopiesStr = _("Running two copies of SoundModule simultaneously may cause\ndata loss or cause your system to crash.\n\n");
+   wxString runningTwoCopiesStr = _("Running two copies of OrenoKoukaon simultaneously may cause\ndata loss or cause your system to crash.\n\n");
 
    if (!mChecker->Create(name, dir)) {
       // Error initializing the wxSingleInstanceChecker.  We don't know
       // whether there is another instance running or not.
 
       wxString prompt =
-         _("SoundModule was not able to lock the temporary files directory.\nThis folder may be in use by another copy of SoundModule.\n") +
+         _("OrenoKoukaon was not able to lock the temporary files directory.\nThis folder may be in use by another copy of OrenoKoukaon.\n") +
          runningTwoCopiesStr +
-         _("Do you still want to start SoundModule?");
+         _("Do you still want to start OrenoKoukaon?");
       int action = wxMessageBox(prompt,
                                 _("Error Locking Temporary Folder"),
                                 wxYES_NO | wxICON_EXCLAMATION,
@@ -1621,10 +1621,10 @@ bool AudacityApp::CreateSingleInstanceChecker(wxString dir)
       // There is another copy of Audacity running.  Force quit.
 
       wxString prompt =
-         _("The system has detected that another copy of SoundModule is running.\n") +
+         _("The system has detected that another copy of OrenoKoukaon is running.\n") +
          runningTwoCopiesStr +
-         _("Use the New or Open commands in the currently running SoundModule\nprocess to open multiple projects simultaneously.\n");
-      wxMessageBox(prompt, _("SoundModule is already running"),
+         _("Use the New or Open commands in the currently running OrenoKoukaon\nprocess to open multiple projects simultaneously.\n");
+      wxMessageBox(prompt, _("OrenoKoukaon is already running"),
             wxOK | wxICON_ERROR);
       delete parser;
       delete mChecker;
@@ -1718,7 +1718,7 @@ wxCmdLineParser *AudacityApp::ParseCommandLine()
    parser->AddSwitch(wxT("t"), wxT("test"), _("run self diagnostics"));
 
    /*i18n-hint: This displays the Audacity version */
-   parser->AddSwitch(wxT("v"), wxT("version"), _("display SoundModule version"));
+   parser->AddSwitch(wxT("v"), wxT("version"), _("display OrenoKoukaon version"));
 
    /*i18n-hint: This is a list of one or more files that Audacity
     *           should open upon startup */
@@ -2055,7 +2055,7 @@ void AudacityApp::AssociateFileTypes()
          // and they got stepped on, so ask.
          int wantAssoc =
             wxMessageBox(
-               _("SoundModule project (.SDM) files are not currently \nassociated with SoundModule. \n\nAssociate them, so they open on double-click?"),
+               _("SoundModule project (.SDM) files are not currently \nassociated with OrenoKoukaon. \n\nAssociate them, so they open on double-click?"),
                _("SoundModule Project Files"),
                wxYES_NO | wxICON_QUESTION);
          if (wantAssoc == wxYES) {
@@ -2103,7 +2103,7 @@ void AudacityApp::AssociateFileTypes()
                   tmpRegAudPath = wxString(associateFileTypes).Lower();
                }
                if (!associateFileTypes.Exists() ||
-                     (tmpRegAudPath.Find(wxT("soundmodule.exe")) >= 0)) {
+                     (tmpRegAudPath.Find(wxT("orenokoukaon.exe")) >= 0)) {
                   associateFileTypes.Create(true);
                   associateFileTypes = (wxString)argv[0] + (wxString)wxT(" \"%1\"");
                }

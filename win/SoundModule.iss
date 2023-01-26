@@ -12,7 +12,7 @@ Filename: "{app}\unins*.*";
 
 [Setup]
 ; compiler-related directives
-OutputBaseFilename=soundmodule-win-2.1.0
+OutputBaseFilename=orenokoukaon-win-2.1.0
 
 WizardImageFile=audacity_InnoWizardImage.bmp
 WizardSmallImageFile=audacity_InnoWizardSmallImage.bmp
@@ -21,7 +21,7 @@ SolidCompression=yes
 
 ; installer-related directives
 AppName=âπåπçƒê∂ÉÇÉWÉÖÅ[Éã
-AppVerName=SoundModule 2.1.0
+AppVerName=OrenoKoukaon 2.1.0
 ; Specify AppVersion as well, so it appears in the Add/Remove Programs entry. 
 AppVersion=2.1.0
 AppPublisher=Bit Trade One.
@@ -30,12 +30,12 @@ AppSupportURL=http://bit-trade-one.co.jp/
 AppUpdatesURL=http://bit-trade-one.co.jp/
 ChangesAssociations=yes
 
-DefaultDirName={pf}\SoundModule
+DefaultDirName={pf}\OrenoKoukaon
 
 ; Always warn if dir exists, because we'll overwrite previous Audacity.
 DirExistsWarning=yes
 DisableProgramGroupPage=yes
-UninstallDisplayIcon="{app}\soundmodule.exe"
+UninstallDisplayIcon="{app}\orenokoukaon.exe"
 
 ; No longer force them to accept the license, just display it.   LicenseFile=..\LICENSE.txt
 InfoBeforeFile=audacity_InnoWizard_InfoBefore.rtf
@@ -91,7 +91,7 @@ Name: resetPrefs; Description:  "Reset Preferences"; Flags: unchecked
 Source: "..\README.txt"; DestDir: "{app}"; Flags: ignoreversion
 
 Source: "..\LICENSE.txt"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\win\release\soundmodule.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\win\release\orenokoukaon.exe"; DestDir: "{app}"; Flags: ignoreversion
 
 ; Manual, which should be got from the manual wiki using ..\scripts\mw2html_audacity\wiki2htm.bat
 Source: "..\help\manual\*"; DestDir: "{app}\help\manual\"; Flags: ignoreversion recursesubdirs
@@ -131,8 +131,8 @@ Source: "..\win\release\plug-ins\*"; DestDir: "{app}\Plug-Ins\"; Flags: ignoreve
 Source: "resetPrefs.txt"; DestDir: "{app}"; Permissions: users-modify; Tasks: resetPrefs  
 
 [Icons]
-Name: "{commonprograms}\SoundModule"; Filename: "{app}\soundmodule.exe"
-Name: "{commondesktop}\SoundModule"; Filename: "{app}\soundmodule.exe"; Tasks: desktopicon
+Name: "{commonprograms}\OrenoKoukaon"; Filename: "{app}\orenokoukaon.exe"
+Name: "{commondesktop}\OrenoKoukaon"; Filename: "{app}\orenokoukaon.exe"; Tasks: desktopicon
 
 [InstallDelete]
 ; Get rid of previous 'reset prefs' file, in case somebody want to reinstall without the reset option after they installed with it
@@ -158,9 +158,9 @@ Type: filesandordirs; Name: "{app}\help"
 
 ; We've switched from a folder in the start menu to just the Audacity.exe at the top level.
 ; Get rid of 1.0.0 folder and its icons.
-Type: files; Name: "{commonprograms}\SoundModule\soundmodule.exe"
-Type: files; Name: "{commonprograms}\SoundModule\unins000.exe"
-Type: dirifempty; Name: "{commonprograms}\SoundModule"
+Type: files; Name: "{commonprograms}\OrenoKoukaon\orenokoukaon.exe"
+Type: files; Name: "{commonprograms}\OrenoKoukaon\unins000.exe"
+Type: dirifempty; Name: "{commonprograms}\OrenoKoukaon"
 
 ;Get rid of previous uninstall item
 Type: files; Name: "{app}\unins*.*"
@@ -192,18 +192,18 @@ Type: files; Name: "{app}\Plug-Ins\crossfadeout.ny"
 ; No longer allow user to choose whether to associate AUP file type with Audacity.
 ; Leaving this one commented out example of the old way.
 ; Root: HKCR; Subkey: ".AUP"; ValueType: string; ValueData: "Audacity.Project"; Flags: createvalueifdoesntexist uninsdeletekey; Tasks: associate_aup
-Root: HKCR; Subkey: ".ORP"; ValueType: string; ValueData: "SoundModule.Project"; Flags: createvalueifdoesntexist uninsdeletekey;
-Root: HKCR; Subkey: "SoundModule.Project\OpenWithList\soundmodule.exe"; Flags: createvalueifdoesntexist uninsdeletekey;
+Root: HKCR; Subkey: ".SDP"; ValueType: string; ValueData: "SoundModule.Project"; Flags: createvalueifdoesntexist uninsdeletekey;
+Root: HKCR; Subkey: "SoundModule.Project\OpenWithList\orenokoukaon.exe"; Flags: createvalueifdoesntexist uninsdeletekey;
 Root: HKCR; Subkey: "SoundModule.Project"; ValueType: string; ValueData: "SoundModule Project File"; Flags: createvalueifdoesntexist uninsdeletekey;
 Root: HKCR; Subkey: "SoundModule.Project\shell"; ValueType: string; ValueData: ""; Flags: createvalueifdoesntexist uninsdeletekey;
 Root: HKCR; Subkey: "SoundModule.Project\shell\open"; Flags: createvalueifdoesntexist uninsdeletekey;
-Root: HKCR; Subkey: "SoundModule.Project\shell\open\command"; ValueType: string; ValueData: """{app}\soundmodule.exe"" ""%1"""; Flags: createvalueifdoesntexist uninsdeletekey;
+Root: HKCR; Subkey: "SoundModule.Project\shell\open\command"; ValueType: string; ValueData: """{app}\orenokoukaon.exe"" ""%1"""; Flags: createvalueifdoesntexist uninsdeletekey;
 
 ;The following would allow a following 'help' installer to know where to put the 'help' files.
 ;Root: HKCR; Subkey: "Audacity.Project\Path";  ValueType: string; ValueData: {app}; Flags: createvalueifdoesntexist uninsdeletekey;
 
 [Run]
-Filename: "{app}\soundmodule.exe"; Description: "Launch SoundModule"; Flags: nowait postinstall skipifsilent
+Filename: "{app}\orenokoukaon.exe"; Description: "Launch OrenoKoukaon"; Flags: nowait postinstall skipifsilent
 
 ;
 ;vc_redist 2022

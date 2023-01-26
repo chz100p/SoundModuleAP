@@ -777,7 +777,7 @@ void AudacityProject::CreateMenusAndCommands()
    /* i18n-hint: Clicking this menu item shows the toolbar with the big buttons on it (play record etc)*/
    c->AddCheck(wxT("ShowTransportTB"), _("&Transport Toolbar"), FN(OnShowTransportToolBar), 0, AlwaysEnabledFlag, AlwaysEnabledFlag);
    /* i18n-hint: Clicking this menu item shows the toolbar with the big buttons on it (play record etc)*/
-   c->AddCheck(wxT("ShowSoundModuleTB"), _("&SoundModule Toolbar"), FN(OnShowSoundModuleToolBar), 0, AlwaysEnabledFlag, AlwaysEnabledFlag);
+   c->AddCheck(wxT("ShowSoundModuleTB"), _("&OrenoKoukaon Toolbar"), FN(OnShowSoundModuleToolBar), 0, AlwaysEnabledFlag, AlwaysEnabledFlag);
 
    c->AddSeparator();
 
@@ -1182,7 +1182,7 @@ void AudacityProject::CreateMenusAndCommands()
    c->AddSeparator();
 #endif
 
-   c->AddItem(wxT("About"), _("&About SoundModule..."), FN(OnAbout));
+   c->AddItem(wxT("About"), _("&About OrenoKoukaon..."), FN(OnAbout));
 
    c->EndMenu();
 
