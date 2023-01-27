@@ -189,4 +189,5 @@ FakesAssemblies/
 
 #
 *.pyc
+win/Output
 
