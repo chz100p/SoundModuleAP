@@ -20,7 +20,7 @@ WizardSmallImageFile=audacity_InnoWizardSmallImage.bmp
 SolidCompression=yes
 
 ; installer-related directives
-AppName=âπåπçƒê∂ÉÇÉWÉÖÅ[Éã
+AppName=â¥ÇÃå¯â âπ!!
 AppVerName=OrenoKoukaon 2.1.0
 ; Specify AppVersion as well, so it appears in the Add/Remove Programs entry. 
 AppVersion=2.1.0
@@ -102,11 +102,11 @@ Source: "..\presets\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs
 ; Don't use the WXWIN environment variable, because...
 ; 1) Can't get the documented {%WXWIN|default dir} parsing to work.
 ; 2) Need the DLL's in the release dir for testing, anyway.
-Source: "..\win\release\wxbase28u_net_vc_custom.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\win\release\wxbase28u_vc_custom.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\win\release\wxmsw28u_adv_vc_custom.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\win\release\wxmsw28u_core_vc_custom.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\win\release\wxmsw28u_html_vc_custom.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\wxWidgets-2.8.12\lib\vc_dll\wxbase28u_net_vc_custom.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\wxWidgets-2.8.12\lib\vc_dll\wxbase28u_vc_custom.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\wxWidgets-2.8.12\lib\vc_dll\wxmsw28u_adv_vc_custom.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\wxWidgets-2.8.12\lib\vc_dll\wxmsw28u_core_vc_custom.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\wxWidgets-2.8.12\lib\vc_dll\wxmsw28u_html_vc_custom.dll"; DestDir: "{app}"; Flags: ignoreversion
 
 ; MSVC runtime DLLs. Some users can't put these in the system dir, so just put them in the EXE dir.
 ; It's legal, per http://www.fsf.org/licensing/licenses/gpl-faq.html#WindowsRuntimeAndGPL .
