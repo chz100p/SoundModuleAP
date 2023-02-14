@@ -180,7 +180,7 @@ END_EVENT_TABLE()
 IMPLEMENT_CLASS(AboutDialog, wxDialog)
 
 AboutDialog::AboutDialog(wxWindow * parent)
-   :  wxDialog(parent, -1, _("About SoundModule"),
+   :  wxDialog(parent, -1, _("About OrenoKoukaon!!"),
                wxDefaultPosition, wxDefaultSize,
                wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
 {
@@ -230,7 +230,10 @@ void AboutDialog::PopulateSoundModulePage( ShuttleGui & S )
          localeStr +
          wxT("\"></head>") +
       wxT("<body bgcolor=\"#ffffff\"><center>") +
-      wxT("<h3>SoundModule ") + wxString(AUDACITY_VERSION_STRING) + wxT("</h3>")+
+      wxT("<h3>OrenoKoukaon!! ") + wxString(AUDACITY_VERSION_STRING) + wxT("</h3>")+
+	  wxT("<p><h3>") + wxString::Format(_("俺の効果音!!")) + wxT("</h3></p>") +
+	  wxT("<p>") + wxString::Format(_("製品ページURL：")) + wxT("https://bit-trade-one.co.jp/adsemx ") + wxT("</p>") +
+	  wxT("<p>") + wxString::Format(_("サポートページ：")) + wxT("https://github.com/bit-trade-one/ADSEMX") + wxT("</p>") +
 	  wxT("</center></body></html>");
 
 
@@ -238,7 +241,7 @@ void AboutDialog::PopulateSoundModulePage( ShuttleGui & S )
 
 
    // New way to add to About box....
-   S.StartNotebookPage( wxT("SoundModule") );
+   S.StartNotebookPage( wxT("OrenoKoukaon!!") );
    S.StartVerticalLay(1);
 
    //v For now, change to AudacityLogoWithName via old-fashioned way, not Theme.
