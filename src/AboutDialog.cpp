@@ -231,9 +231,9 @@ void AboutDialog::PopulateSoundModulePage( ShuttleGui & S )
          wxT("\"></head>") +
       wxT("<body bgcolor=\"#ffffff\"><center>") +
       wxT("<h3>OrenoKoukaon!! ") + wxString(AUDACITY_VERSION_STRING) + wxT("</h3>")+
-	  wxT("<p><h3>") + wxString::Format(_("俺の効果音!!")) + wxT("</h3></p>") +
-	  wxT("<p>") + wxString::Format(_("製品ページURL：")) + wxT("https://bit-trade-one.co.jp/adsemx ") + wxT("</p>") +
-	  wxT("<p>") + wxString::Format(_("サポートページ：")) + wxT("https://github.com/bit-trade-one/ADSEMX") + wxT("</p>") +
+	  wxT("<p><h3>") + wxString::Format(_("OrenoKoukaon!!")) + wxT("</h3></p>") +
+	  wxT("<p>") + wxString::Format(_("Product Page : ")) + wxT("<a href=\"https://bit-trade-one.co.jp/adsemx\">https://bit-trade-one.co.jp/adsemx</a>") + wxT("</p>") +
+	  wxT("<p>") + wxString::Format(_("Support Page : ")) + wxT("<a href=\"https://github.com/bit-trade-one/ADSEMX\">https://github.com/bit-trade-one/ADSEMX</a>") + wxT("</p>") +
 	  wxT("</center></body></html>");
 
 

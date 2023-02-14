@@ -186,14 +186,10 @@ static wxString HelpTextBuiltIn( const wxString & Key )
       /* i18n-hint: Preserve [[file:quick_help.html as it's the name of a file.*/
       return WrapText(
          wxString(wxT("")) +
-         _("<center><h3>How to Get Help</h3></center>") +
-         _("Welcome to OrenoKoukaon ") + AUDACITY_VERSION_STRING + wxT("!<p>") +
+         wxString::Format(_("Welcome to OrenoKoukaon!! %s"), AUDACITY_VERSION_STRING) + wxT("!<p>") +
          _("These are our support methods:") + wxT("</p>") + wxT("<ul><li>") +
-         _(" [[file:quick_help.html|Quick Help]] (should be installed locally, <a href=\"http://manual.audacityteam.org/o/quick_help.html\">Internet version if it isn't</a>)") + wxT("</li><li>") +
-         _(" [[file:index.html|Manual]] (should be installed locally, <a href=\"http://manual.audacityteam.org/o/\">Internet version if it isn't</a>)") + wxT("</li><li>") +
-         _(" [[http://wiki.audacityteam.org/index.php|Wiki]] (the latest tips, tricks and tutorials, on the Internet)") + wxT("</li><li>") +
-         _(" <a href=\"http://forum.audacityteam.org/\">Forum</a> (ask your question directly, on the Internet)") + wxT("</li></ul></p><p>") +
-         _(" For even quicker answers, all the online resources above are <b>searchable</b>.")  + wxT("</p>")
+         wxString::Format(_("Product Page : ")) + wxT("<a href=\"https://bit-trade-one.co.jp/adsemx\">https://bit-trade-one.co.jp/adsemx</a>") + wxT("</li><li>") +
+         wxString::Format(_("Support Page : ")) + wxT("<a href=\"https://github.com/bit-trade-one/ADSEMX\">https://github.com/bit-trade-one/ADSEMX</a>") + wxT("</li></ul>")
       );
    }
    if(Key==wxT("wma-proprietary"))

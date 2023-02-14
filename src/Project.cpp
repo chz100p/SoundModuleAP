@@ -1016,7 +1016,7 @@ AudacityProject::AudacityProject(wxWindow * parent, wxWindowID id,
 
    mTrackFactory = new TrackFactory(mDirManager);
 
-   wxString msg = wxString::Format(_("Welcome to OrenoKoukaon version %s"),
+   wxString msg = wxString::Format(_("Welcome to OrenoKoukaon!! version %s"),
                                    AUDACITY_VERSION_STRING);
    mStatusBar->SetStatusText(msg);
    mLastStatusUpdateTime = ::wxGetUTCTime();
