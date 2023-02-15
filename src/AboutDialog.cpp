@@ -241,7 +241,7 @@ void AboutDialog::PopulateSoundModulePage( ShuttleGui & S )
 
 
    // New way to add to About box....
-   S.StartNotebookPage( wxT("OrenoKoukaon!!") );
+   S.StartNotebookPage( _("OrenoKoukaon!!") );
    S.StartVerticalLay(1);
 
    //v For now, change to AudacityLogoWithName via old-fashioned way, not Theme.
