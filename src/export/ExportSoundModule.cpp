@@ -31,6 +31,8 @@
 #include "../SoundModule/FlashInfo.h"
 #include "../SoundModule/USBManager.h"
 
+#include <functional>
+
 /****************************************************************************/
 /*                                                                          */
 /*  クラス名：  メインクラス                                                */
@@ -202,6 +204,20 @@ int ExportSoundModule::Export(AudacityProject *project,
                       int WXUNUSED(subformat))
 {
     int updateResult = eProgressSuccess;
+
+	//
+	unsigned int currentState = project->GetUndoManager()->GetCurrentState();
+	struct scope_exit
+	{
+		scope_exit(std::function<void(void)> f) : f_(f) {}
+		~scope_exit(void) { f_(); }
+
+	private:
+		std::function<void(void)> f_;
+	};
+	scope_exit const on_exit([&project, currentState](void) { // Use C++11 lambda.
+		project->SetStateTo(currentState);
+	});
 
 	// set rate
 	if (gPrefs->Read(wxT("/FileFormats/SoundModuleSetRate"), true))
