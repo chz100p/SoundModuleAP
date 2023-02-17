@@ -33,7 +33,7 @@
 
 /****************************************************************************/
 /*                                                                          */
-/*  �N���X���F  ���C���N���X                                                */
+/*  クラス名：  メインクラス                                                */
 /*                                                                          */
 /****************************************************************************/
 class PipoApp
@@ -473,8 +473,8 @@ int ExportSoundModule::Export(AudacityProject *project,
 				}
 				if (updateResult == eProgressSuccess)
 				{
-					// HEADER_ID�͍ŏ���USB�u���b�N����
-					// �����ŏ��ȊO�̃u���b�N��HEADER_ID����������f�[�^��ҏW����
+					// HEADER_IDは最初のUSBブロックだけ
+					// もし最初以外のブロックにHEADER_IDがあったらデータを編集する
 					DWORD dwRoop = (DWORD)(pipo.dwDataSize / USB_BUFFER_SIZE);
 					if ((pipo.dwDataSize % USB_BUFFER_SIZE) != 0)
 					{
@@ -490,8 +490,8 @@ int ExportSoundModule::Export(AudacityProject *project,
 						{
 							header->dwHeaderStartID = HEADER_ID_NOT_HEADER;
 						}
-						// adsemx�J�������̒ǉ�
-						// �V�K�v���g�R���ƏՓ˂��Ȃ��悤��StartID������������
+						// adsemx開発向けの追加
+						// 新規プロトコルと衝突しないようにStartIDを書き換える
 						if ((header->dwHeaderStartID & 0xffffff00) == 0xBABEEF00)
 						{
 							header->dwHeaderStartID |= 0xBBBEEF00;
@@ -561,9 +561,9 @@ ExportPlugin *New_ExportSoundModule()
 
 /****************************************************************************/
 /*                                                                          */
-/*  �֐���  �F  PipoApp                                                         */
+/*  関数名  ：  PipoApp                                                         */
 /*                                                                          */
-/*  ����    �F  �R���X�g���N�^                                              */
+/*  説明    ：  コンストラクタ                                              */
 /*                                                                          */
 /****************************************************************************/
 PipoApp::PipoApp(): dwDataSize(0)
@@ -577,9 +577,9 @@ PipoApp::PipoApp(): dwDataSize(0)
 
 /****************************************************************************/
 /*                                                                          */
-/*  �֐���  �F  ~PipoApp                                                    */
+/*  関数名  ：  ~PipoApp                                                    */
 /*                                                                          */
-/*  ����    �F  �f�X�g���N�^                                                */
+/*  説明    ：  デストラクタ                                                */
 /*                                                                          */
 /****************************************************************************/
 PipoApp::~PipoApp()
@@ -603,7 +603,7 @@ int PipoApp::WriteData(ProgressDialog *progress)
         goto END;
     }
     
-    //�f�[�^�̏������� ------------------------------------------------------->
+    //データの書き込み ------------------------------------------------------->
     dwRoop = (DWORD)(dataSize / USB_BUFFER_SIZE);
     if( (dataSize % USB_BUFFER_SIZE) != 0 )
     {
