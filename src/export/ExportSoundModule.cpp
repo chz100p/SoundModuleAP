@@ -206,17 +206,26 @@ int ExportSoundModule::Export(AudacityProject *project,
     int updateResult = eProgressSuccess;
 
 	//
-	unsigned int currentState = project->GetUndoManager()->GetCurrentState();
 	struct scope_exit
 	{
 		scope_exit(std::function<void(void)> f) : f_(f) {}
-		~scope_exit(void) { f_(); }
+		~scope_exit(void) { try { f_(); } catch (...) {} }
 
 	private:
 		std::function<void(void)> f_;
 	};
-	scope_exit const on_exit([&project, currentState](void) { // Use C++11 lambda.
+	double currentRate = project->AS_GetRate();
+	unsigned int currentState = project->GetUndoManager()->GetCurrentState();
+	scope_exit const on_exit([&project, currentRate, currentState](void) { // Use C++11 lambda.
 		project->SetStateTo(currentState);
+		auto um = project->GetUndoManager();
+		unsigned int i = um->GetCurrentState(); // 1 base
+		while (i < um->GetNumStates()) { // 1 base
+			um->RemoveStateAt(i); // 0 base
+		}
+		project->UpdateHistoryWindow();
+		project->AS_SetRate(currentRate);
+		project->GetSelectionBar()->SetRate(currentRate);
 	});
 
 	// set rate

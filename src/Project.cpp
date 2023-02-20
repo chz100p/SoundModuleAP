@@ -1037,6 +1037,12 @@ AudacityProject::~AudacityProject()
    wxGetApp().GetRecentFiles()->RemoveMenu(mRecentFilesMenu);
 }
 
+void AudacityProject::UpdateHistoryWindow()
+{
+    if (mHistoryWindow)
+        mHistoryWindow->UpdateDisplay();
+}
+
 void AudacityProject::UpdatePrefsVariables()
 {
    gPrefs->Read(wxT("/AudioFiles/ShowId3Dialog"), &mShowId3Dialog, true);

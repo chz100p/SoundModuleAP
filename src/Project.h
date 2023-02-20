@@ -290,6 +290,7 @@ class AUDACITY_DLL_API AudacityProject:  public wxFrame,
 
    // checkActive is a temporary hack that should be removed as soon as we
    // get multiple effect preview working
+   void UpdateHistoryWindow();
    void UpdateMenus(bool checkActive = true);
    void UpdatePrefs();
    void UpdatePrefsVariables();
